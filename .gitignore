@@ -1,0 +1,11 @@
+#executables
+bin/
+bin-int/
+
+#ide config
+.vs/
+
+#vs project/sln config
+*.sln
+*.vcxproj
+*.vcxproj.filters
