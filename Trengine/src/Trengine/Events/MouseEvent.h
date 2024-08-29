@@ -1,6 +1,6 @@
 #pragma once
+#include "../../trpch.h" 
 #include "../Core.h"
-#include <sstream>
 #include "Event.h"
 
 namespace Trengine {

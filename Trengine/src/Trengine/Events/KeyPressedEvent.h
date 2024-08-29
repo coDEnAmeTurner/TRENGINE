@@ -1,6 +1,6 @@
 #pragma once
+#include "../../trpch.h"
 #include "KeyEvent.h"
-#include <sstream>
 
 namespace Trengine {
 	class TR_API KeyPressedEvent : public KeyEvent {

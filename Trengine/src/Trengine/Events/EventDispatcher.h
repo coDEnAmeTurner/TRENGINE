@@ -1,5 +1,5 @@
 #pragma once
-#include <functional>
+#include "../../trpch.h"
 #include "Event.h"
 
 namespace Trengine {

@@ -138,6 +138,9 @@ project "Trengine"
     targetdir("bin/" .. outputdir .. "/%{prj.name}")
     objdir("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "trpch.h"
+	pchsource "Trengine/src/trpch.cpp"
+
     files {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",

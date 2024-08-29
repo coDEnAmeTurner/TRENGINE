@@ -10,6 +10,13 @@
 	#error Trengine only supports Windows!
 #endif
 
+#ifdef TR_PLATFORM_WINDOWS
+	#define CREATE_WINDOW() std::unique_ptr<Window>(&Trengine::WindowsWindow(Trengine::WindowProps()))
+#else
+	#define CREATE_WINDOW() std::unique_ptr<Window>(nullptr)
+#endif
+
+
 #define BIT(x) (1 << x)
 
 #define EVENT_CLASS_TYPE(type) static EventType GetStaticType() {return EventType::##type;}\

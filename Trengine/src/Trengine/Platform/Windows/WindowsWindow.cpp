@@ -3,6 +3,10 @@
 
 namespace Trengine {
 
+	Window* Window::create(const WindowProps& props) {
+		return new WindowsWindow(props);
+	}
+
 	void WindowsWindow::shutDown() {
 		glfwDestroyWindow(window);
 	}
@@ -24,6 +28,33 @@ namespace Trengine {
 
 		if (!glfwInitialized) {
 			int success = glfwInit();
+			TR_CORE_ASSERT(success, "Could not initialize GLFW!");
+
+			glfwInitialized = true;
 		}
+
+		window = glfwCreateWindow((int)props.width, (int)props.height, data.title.c_str(), nullptr, NULL);
+		glfwMakeContextCurrent(window);
+		glfwSetWindowUserPointer(window, &data);
+		setVSync(true);
+
+	}
+
+	void WindowsWindow::onUpdate() {
+		glfwPollEvents();
+		glfwSwapBuffers(window);
+	}
+
+	void WindowsWindow::setVSync(bool enabled) {
+		if (enabled)
+			glfwSwapInterval(1);
+		else
+			glfwSwapInterval(0);
+
+		data.vSync = enabled;
+	}
+
+	bool WindowsWindow::isVSync() const {
+		return data.vSync;
 	}
 }

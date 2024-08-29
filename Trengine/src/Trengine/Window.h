@@ -1,6 +1,6 @@
 #pragma once
+#include "../trpch.h"
 #include "Core.h"
-#include <functional>
 #include "Events/Event.h"
 
 namespace Trengine {
@@ -26,6 +26,8 @@ namespace Trengine {
 		virtual void setEventCallback(const EventCallbackFn& callback) = 0;
 		virtual void setVSync(bool enabled) = 0;
 		virtual bool isVSync() const = 0;
+
+		static Window* create(const WindowProps& props = WindowProps());
 	};
 
 }

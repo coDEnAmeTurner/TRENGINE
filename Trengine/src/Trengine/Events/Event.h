@@ -1,6 +1,6 @@
 #pragma once
+#include "../../trpch.h"
 #include "../Core.h"
-#include <string>
 #include "spdlog/spdlog.h"
 
 namespace Trengine {
