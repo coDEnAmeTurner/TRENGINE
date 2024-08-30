@@ -2,6 +2,7 @@
 
 #include "Window.h"
 #include "Events/EventDispatcher.h"
+#include "Events/ApplicationEvent.h"
 
 namespace Trengine {
 	class TR_API Application {

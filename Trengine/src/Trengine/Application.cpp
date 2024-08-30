@@ -1,6 +1,5 @@
 #include "trpch.h"
 #include "Application.h"
-#include "Events/ApplicationEvent.h"
 #include "Platform/Windows/WindowsWindow.h"
 #include "../Log.h"
 #include "gl/GL.h"
@@ -12,7 +11,6 @@ namespace Trengine {
 		window = CREATE_WINDOW();
 		//assume window is WindowsWindow, this will be modified in the future
 		window->setEventCallback(BIND_EVENT_FN(onEvent));
-		
 	};
 
 	Application::~Application() {
@@ -34,7 +32,7 @@ namespace Trengine {
 
 		dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 
-		TR_CORE_TRACE("{0}", e);
+		TR_CORE_TRACE("{0}", e.toString());
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& e) {

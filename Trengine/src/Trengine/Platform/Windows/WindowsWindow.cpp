@@ -8,6 +8,8 @@
 
 namespace Trengine {
 
+	static bool glfwInitialized = false;
+
 	Window* Window::create(const WindowProps& props) {
 		return new WindowsWindow(props);
 	}
@@ -145,4 +147,9 @@ namespace Trengine {
 	bool WindowsWindow::isVSync() const {
 		return data.vSync;
 	}
+
+	void WindowsWindow::setEventCallback(const Window::EventCallbackFn& callback) {
+		data.eventCallBack = callback;
+	}
+
 }

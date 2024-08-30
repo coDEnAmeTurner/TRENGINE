@@ -18,8 +18,6 @@ namespace Trengine {
 		using EventCallbackFn = std::function<void(Event&)>;
 		using uint = unsigned int;
 
-		static bool glfwInitialized;
-
 		virtual ~Window() { }
 		virtual void onUpdate() = 0;
 		virtual uint getWidth() const = 0;
