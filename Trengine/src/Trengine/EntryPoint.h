@@ -11,13 +11,13 @@ extern Trengine::Application* Trengine::CreateApplication();
 int main(int argc, char** argv) {
 	Trengine::Log::Init();
 	Trengine::WindowResizeEvent e(1280, 720);
-	if (e.IsInCategory(Trengine::EventCategoryApplication)) {
-		TR_TRACE(e.ToString());
+	if (e.isInCategory(Trengine::EventCategoryApplication)) {
+		TR_TRACE(e.toString());
 
 	}
 
-	if (e.IsInCategory(Trengine::EventCategoryInput)) {
-		TR_TRACE(e.ToString());
+	if (e.isInCategory(Trengine::EventCategoryInput)) {
+		TR_TRACE(e.toString());
 	}
 
 

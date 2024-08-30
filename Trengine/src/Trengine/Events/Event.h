@@ -1,5 +1,4 @@
 #pragma once
-#include "../../trpch.h"
 #include "../Core.h"
 #include "spdlog/spdlog.h"
 
@@ -25,13 +24,13 @@ namespace Trengine {
 	protected:
 		bool handled = false;
 	public:
-		virtual EventType GetEventType() const = 0;
-		virtual const char* GetName() const = 0;
-		virtual int GetCategoryFlags() const = 0;
-		virtual std::string ToString() const { return GetName(); }
+		virtual EventType getEventType() const = 0;
+		virtual const char* getName() const = 0;
+		virtual int getCategoryFlags() const = 0;
+		virtual std::string toString() const { return getName(); }
 
-		bool IsInCategory(EventCategory category) {
-			return GetCategoryFlags() & category;
+		bool isInCategory(EventCategory category) {
+			return getCategoryFlags() & category;
 		}
 
 	};

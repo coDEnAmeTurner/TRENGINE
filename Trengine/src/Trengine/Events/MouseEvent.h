@@ -1,5 +1,5 @@
 #pragma once
-#include "../../trpch.h" 
+#include <sstream>
 #include "../Core.h"
 #include "Event.h"
 
@@ -14,7 +14,7 @@ namespace Trengine {
 		float GetX() const { return mouseX; }
 		float GetY() const { return mouseY; }
 
-		std::string ToString() const override {
+		std::string toString() const override {
 			std::stringstream ss;
 			ss << "MouseMovedEvent:	" << mouseX << ", " << mouseY;
 			return ss.str();
@@ -34,7 +34,7 @@ namespace Trengine {
 		float GetXOffset() const { return xOffset; }
 		float GetYOffset() const { return yOffset; }
 
-		std::string ToString() const override {
+		std::string toString() const override {
 			std::stringstream ss;
 			ss << "MouseScrolledEvent:	" << xOffset << ", " << yOffset;
 			return ss.str();
@@ -55,7 +55,7 @@ namespace Trengine {
 			return this->button;
 		}
 
-		std::string ToString() const override {
+		std::string toString() const override {
 			std::stringstream ss;
 			ss << "MouseButtonEvent:	" << button;
 			return ss.str();
@@ -69,7 +69,7 @@ namespace Trengine {
 		MouseButtonPressedEvent(int button)
 			: MouseButtonEvent(button) {}
 
-		std::string ToString() const override {
+		std::string toString() const override {
 			std::stringstream ss;
 			ss << "MouseButtonEvent:	" << button;
 			return ss.str();
@@ -83,7 +83,7 @@ namespace Trengine {
 		MouseButtonReleasedEvent(int button)
 			: MouseButtonEvent(button) {}
 
-		std::string ToString() const override {
+		std::string toString() const override {
 			std::stringstream ss;
 			ss << "MouseButtonReleasedEvent:	" << button;
 			return ss.str();

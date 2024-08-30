@@ -1,5 +1,4 @@
 #pragma once
-#include "trpch.h"
 #include "Trengine/Core.h"
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"

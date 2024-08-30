@@ -1,15 +1,17 @@
 #pragma once
 
-#include "../trpch.h"
-#include "Core.h"
 #include "Window.h"
+#include "Events/EventDispatcher.h"
 
 namespace Trengine {
 	class TR_API Application {
 	private:
 		std::unique_ptr<Window> window;
 		bool running = true;
+		EventDispatcher dispatcher;
 
+
+		bool OnWindowClose(WindowCloseEvent& e);
 	public:
 		Application();
 		virtual ~Application();

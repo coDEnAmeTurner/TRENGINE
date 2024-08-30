@@ -1,6 +1,5 @@
 #pragma once
 
-#include "trpch.h"
 #include <stdio.h>
 #include "Log.h"
 

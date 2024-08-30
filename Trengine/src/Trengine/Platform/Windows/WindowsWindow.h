@@ -7,8 +7,6 @@ namespace Trengine {
 	private:
 		GLFWwindow* window;
 
-		bool glfwInitialized = false;
-
 		struct WindowData {
 			std::string title;
 			unsigned int width, height;

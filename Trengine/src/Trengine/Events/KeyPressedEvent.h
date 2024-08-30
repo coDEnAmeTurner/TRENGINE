@@ -1,5 +1,5 @@
 #pragma once
-#include "../../trpch.h"
+#include <sstream>
 #include "KeyEvent.h"
 
 namespace Trengine {
@@ -15,7 +15,7 @@ namespace Trengine {
 
 		int GetRepeatCount() const { return repeatCount; }
 
-		std::string ToString() const override {
+		std::string toString() const override {
 			std::stringstream ss;
 			ss << "KeyPressedEvent: " << keyCode << " (" << repeatCount << " repeats)";
 			return ss.str();

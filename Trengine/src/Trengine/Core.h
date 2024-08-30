@@ -19,11 +19,11 @@
 
 #define BIT(x) (1 << x)
 
-#define EVENT_CLASS_TYPE(type) static EventType GetStaticType() {return EventType::##type;}\
-								virtual EventType GetEventType() const override { return GetStaticType(); }\
-								virtual const char* GetName() const override {return #type;}
+#define EVENT_CLASS_TYPE(type) static EventType getStaticType() {return EventType::##type;}\
+								virtual EventType getEventType() const override { return getStaticType(); }\
+								virtual const char* getName() const override {return #type;}
 
-#define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override {return category;}\
+#define EVENT_CLASS_CATEGORY(category) virtual int getCategoryFlags() const override {return category;}\
 
 #ifdef TR_ENABLE_ASSERTS
 	#define TR_ASSERT(x, ...) {if (!(x)) { TR_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();}}

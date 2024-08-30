@@ -1,5 +1,5 @@
 #pragma once
-#include "../../trpch.h"
+#include <sstream>
 #include "../Core.h"
 #include "Event.h"
 
@@ -14,7 +14,7 @@ namespace Trengine {
 		unsigned int GetWidth() const { return width; }
 		unsigned int GetHeight() const { return height; }
 
-		std::string ToString() const override {
+		std::string toString() const override {
 			std::stringstream ss;
 			ss << "WindowResizeEvent: " << width << ", " << height;
 			return ss.str();

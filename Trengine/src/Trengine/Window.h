@@ -1,6 +1,6 @@
 #pragma once
-#include "../trpch.h"
 #include "Core.h"
+#include "../Log.h"
 #include "Events/Event.h"
 
 namespace Trengine {
@@ -18,6 +18,8 @@ namespace Trengine {
 		using EventCallbackFn = std::function<void(Event&)>;
 		using uint = unsigned int;
 
+		static bool glfwInitialized;
+
 		virtual ~Window() { }
 		virtual void onUpdate() = 0;
 		virtual uint getWidth() const = 0;
@@ -28,6 +30,9 @@ namespace Trengine {
 		virtual bool isVSync() const = 0;
 
 		static Window* create(const WindowProps& props = WindowProps());
+		static void glfwErrorCallback(int error, const char* description) {
+			TR_CORE_ERROR("GLFW Error ({0}): {1)", error, description);
+		}
 	};
 
 }

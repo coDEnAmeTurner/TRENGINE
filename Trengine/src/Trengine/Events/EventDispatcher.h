@@ -1,5 +1,4 @@
 #pragma once
-#include "../../trpch.h"
 #include "Event.h"
 
 namespace Trengine {
@@ -8,18 +7,31 @@ namespace Trengine {
 		using EventFn = std::function<bool(T&)>;
 
 	private:
-		Event& event;
+		Event* event;
 
 	public:
-		EventDispatcher(Event& event)
+		EventDispatcher()
+			: event(NULL)
+		{
+		}
+
+		EventDispatcher(Event* event)
 			: event(event) {
 
 		}
 
+		void setEvent(Event* event) {
+			this->event = event;
+		}
+
+		Event* getEvent() {
+			return event;
+		}
+
 		template <typename T>
-		bool Dispatch(EventFn<T> func) {
-			if (event.GetEventType() == T::GetStaticType()) {
-				event.handled = func(*(T*)event);
+		bool dispatch(EventFn<T> func) {
+			if (event->getEventType() == T::getStaticType()) {
+				event->handled = func(*(T*)event);
 				return true;
 				
 			}
@@ -30,6 +42,6 @@ namespace Trengine {
 	};
 
 	std::ostream& operator<<(std::ostream& os, const Event& e) {
-		return os << e.ToString();
+		return os << e.toString();
 	}
 }

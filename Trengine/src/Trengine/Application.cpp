@@ -1,3 +1,4 @@
+#include "trpch.h"
 #include "Application.h"
 #include "Events/ApplicationEvent.h"
 #include "Platform/Windows/WindowsWindow.h"
@@ -5,13 +6,13 @@
 #include "gl/GL.h"
 
 namespace Trengine {
-#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
+#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
 	Application::Application() {
 		window = CREATE_WINDOW();
 		//assume window is WindowsWindow, this will be modified in the future
 		window->setEventCallback(BIND_EVENT_FN(onEvent));
-
+		
 	};
 
 	Application::~Application() {
@@ -29,6 +30,15 @@ namespace Trengine {
 	}
 
 	void Application::onEvent(Event& e) {
-		TR_CORE_INFO("{0}", e);
+		dispatcher.setEvent(&e);
+
+		dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+
+		TR_CORE_TRACE("{0}", e);
+	}
+
+	bool Application::OnWindowClose(WindowCloseEvent& e) {
+		this->running = false;
+		return true;
 	}
 }
