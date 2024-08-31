@@ -11,9 +11,9 @@
 #endif
 
 #ifdef TR_PLATFORM_WINDOWS
-	#define CREATE_WINDOW() std::unique_ptr<Window>(&Trengine::WindowsWindow(Trengine::WindowProps()))
+	#define CREATE_WINDOW std::unique_ptr<Window>((new Trengine::WindowsWindow(Trengine::WindowProps())))
 #else
-	#define CREATE_WINDOW() std::unique_ptr<Window>(nullptr)
+	#define CREATE_WINDOW std::unique_ptr<Window>(nullptr)
 #endif
 
 

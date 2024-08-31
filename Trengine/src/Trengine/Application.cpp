@@ -8,7 +8,7 @@ namespace Trengine {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
 	Application::Application() {
-		window = CREATE_WINDOW();
+		window = CREATE_WINDOW;
 		//assume window is WindowsWindow, this will be modified in the future
 		window->setEventCallback(BIND_EVENT_FN(onEvent));
 	};
