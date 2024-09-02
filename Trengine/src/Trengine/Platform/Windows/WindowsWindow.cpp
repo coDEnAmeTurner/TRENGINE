@@ -1,4 +1,5 @@
 #include "trpch.h"
+#include "glad/glad.h"
 #include "WindowsWindow.h"
 #include "../../Events/ApplicationEvent.h"
 #include "../../Events/KeyPressedEvent.h"
@@ -42,6 +43,8 @@ namespace Trengine {
 
 		window = glfwCreateWindow((int)props.width, (int)props.height, data.title.c_str(), nullptr, NULL);
 		glfwMakeContextCurrent(window);
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		TR_CORE_ASSERT(status, "Failed to initialize Glad!");
 		glfwSetWindowUserPointer(window, &data);
 		setVSync(true);
 

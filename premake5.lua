@@ -12,8 +12,11 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Include relative to the root folder (sln dir)
 IncludeDir = {}
 IncludeDir["GLFW"] = "vendor/GLFW/include"
+IncludeDir["GLAD"] = "vendor/GLAD/include"
 
 include "vendor/GLFW"
+
+include "vendor/GLAD"
 
 project "Trengine"
     location "Trengine"
@@ -34,11 +37,13 @@ project "Trengine"
     includedirs {
 		"%{prj.name}/src",
         "%{prj.name}/src/../../vendor/spdlog/include",
-        "%{IncludeDir.GLFW}"
+        "%{IncludeDir.GLFW}",
+        "%{IncludeDir.GLAD}"
     }
 
     links {
         "GLFW",
+        "GLAD",
         "opengl32.lib"
     }
 
@@ -50,7 +55,8 @@ project "Trengine"
         defines {
             "TR_PLATFORM_WINDOWS",
             "TR_BUILD_DLL",
-			"TR_ENABLE_ASSERTS"
+			"TR_ENABLE_ASSERTS", 
+            "GLFW_INCLUDE_NONE"
         }
 
         postbuildcommands {
@@ -60,14 +66,17 @@ project "Trengine"
     filter "configurations:Debug" 
         defines "TR_DEBUG"
         symbols "On"
+        buildoptions "/MDd"
 
     filter "configurations:Release" 
         defines "TR_RELEASE"
         symbols "On"
+        buildoptions "/MD"
 
     filter "configurations:Dist" 
         defines "TR_DIST"
         symbols "On"
+        buildoptions "/MD"
 
 project "Sandbox"
     location "Sandbox"
@@ -99,17 +108,21 @@ project "Sandbox"
 
         defines {
             "TR_PLATFORM_WINDOWS",
-			"TR_ENABLE_ASSERTS"
+			"TR_ENABLE_ASSERTS",
+            "GLFW_INCLUDE_NONE"
         }
 
     filter "configurations:Debug" 
         defines "TR_DEBUG"
         symbols "On"
+        buildoptions "/MDd"
 
     filter "configurations:Release" 
         defines "TR_RELEASE"
         symbols "On"
+        buildoptions "/MD"
 
     filter "configurations:Dist" 
         defines "TR_DIST"
         symbols "On"
+        buildoptions "/MD"

@@ -4,6 +4,8 @@
 #include "Events/Event.h"
 
 namespace Trengine {
+	using uint = unsigned int;
+
 	struct WindowProps {
 		std::string title;
 		unsigned int width;
@@ -16,7 +18,6 @@ namespace Trengine {
 	class TR_API Window {
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
-		using uint = unsigned int;
 
 		virtual ~Window() { }
 		virtual void onUpdate() = 0;

@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "Platform/Windows/WindowsWindow.h"
 #include "../Log.h"
-#include "gl/GL.h"
+#include "glad/glad.h"
 
 namespace Trengine {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
@@ -18,6 +18,10 @@ namespace Trengine {
 	};
 
 	void Application::Run() {
+
+		uint vao;
+		glCreateVertexArrays(1, &vao);
+		TR_CORE_TRACE("VAO: {0}", vao);
 
 		while (true)
 		{
