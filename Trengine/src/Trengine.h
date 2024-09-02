@@ -12,6 +12,7 @@
 #include "Trengine/Events/KeyEvent.h"
 #include "Trengine/Events/KeyPressedEvent.h"
 #include "Trengine/Events/MouseEvent.h"
+#include "Trengine/Layer.h"
 
 //entry point
 #include "Trengine/EntryPoint.h"

@@ -3,16 +3,17 @@
 #include "Window.h"
 #include "Events/EventDispatcher.h"
 #include "Events/ApplicationEvent.h"
+#include "LayerStack.h"
 
 namespace Trengine {
 	class TR_API Application {
 	private:
 		std::unique_ptr<Window> window;
+
+	protected:
 		bool running = true;
-		EventDispatcher dispatcher;
+		LayerStack layerStack;
 
-
-		bool OnWindowClose(WindowCloseEvent& e);
 	public:
 		Application();
 		virtual ~Application();

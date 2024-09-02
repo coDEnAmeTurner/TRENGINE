@@ -25,19 +25,18 @@ namespace Trengine {
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			window->onUpdate();
+
+			for (Layer* layer : layerStack)
+				layer->onUpdate();
 		}
 	}
 
 	void Application::onEvent(Event& e) {
-		dispatcher.setEvent(&e);
+		for (auto it = layerStack.end(); it != layerStack.begin();)
+		{
+			(*--it)->onEvent(e);
 
-		dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
-
-		TR_CORE_TRACE("{0}", e.toString());
-	}
-
-	bool Application::OnWindowClose(WindowCloseEvent& e) {
-		this->running = false;
-		return true;
+			if (e.isHandled()) break;
+		}
 	}
 }

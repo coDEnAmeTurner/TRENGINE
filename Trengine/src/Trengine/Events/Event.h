@@ -27,6 +27,8 @@ namespace Trengine {
 		virtual EventType getEventType() const = 0;
 		virtual const char* getName() const = 0;
 		virtual int getCategoryFlags() const = 0;
+		bool isHandled() { return handled; }
+		void setHandled(bool handled) { this->handled = handled; }
 		virtual std::string toString() const { return getName(); }
 
 		bool isInCategory(EventCategory category) {
