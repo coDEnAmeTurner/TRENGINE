@@ -6,7 +6,6 @@
 
 namespace Trengine {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
-
 	Application::Application() {
 		window = CREATE_WINDOW;
 		//assume window is WindowsWindow, this will be modified in the future
@@ -16,6 +15,15 @@ namespace Trengine {
 	Application::~Application() {
 
 	};
+
+	Application* Application::getInstance()
+	{
+		if (!instance)
+			instance = CreateApplication();
+
+		return instance;
+
+	}
 
 	void Application::Run() {
 

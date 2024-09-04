@@ -8,15 +8,17 @@
 namespace Trengine {
 	class TR_API Application {
 	private:
+		static Application* instance;
 		std::unique_ptr<Window> window;
 
 	protected:
 		bool running = true;
 		LayerStack layerStack;
-
-	public:
 		Application();
 		virtual ~Application();
+
+	public:
+		static Application* getInstance();
 
 		void Run();
 
