@@ -1,6 +1,8 @@
 #executables
 bin/
 bin-int/
+#not these executables
+!vendor/premake
 
 #ide config
 .vs/
