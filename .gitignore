@@ -2,7 +2,7 @@
 bin/
 bin-int/
 #not these executables
-!vendor/premake
+!vendor/bin
 
 #ide config
 .vs/
