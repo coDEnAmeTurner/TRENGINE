@@ -20,6 +20,7 @@ class Sandbox : public Trengine::Application {
 public:
 	Sandbox() {
 		layerStack.PushLayer(new ExampleLayer());
+		layerStack.PushOverlay(new Trengine::ImGUILayer());
 	}
 
 	~Sandbox() {

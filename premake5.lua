@@ -19,6 +19,8 @@ include "vendor/GLFW"
 
 include "vendor/GLAD"
 
+include "vendor/imgui"
+
 project "Trengine"
     location "Trengine"
     kind "SharedLib"

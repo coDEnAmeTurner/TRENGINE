@@ -8,23 +8,27 @@
 namespace Trengine {
 	class TR_API Application {
 	private:
-		static Application* instance;
 		std::unique_ptr<Window> window;
 
 	protected:
+		static Application* instance;
 		bool running = true;
 		LayerStack layerStack;
-		Application();
-		virtual ~Application();
 
 	public:
+		Application();
+
 		static Application* getInstance();
 
 		void Run();
 
 		void onEvent(Event& e);
+
+		Window& getWindow();
+
+		virtual ~Application();
 	};
 
-	//to be defined in client, put it here so that the declaration can be included in the client
 	Application* CreateApplication();
+
 }

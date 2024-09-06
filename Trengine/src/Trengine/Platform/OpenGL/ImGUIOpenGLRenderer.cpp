@@ -94,8 +94,9 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#include "trpch.h"
+#include "glad/glad.h"
 #include "imgui.h"
-#include "ImGUIOpenGLRenderer.h"
 #include <stdio.h>
 #if defined(_MSC_VER) && _MSC_VER <= 1500 // MSVC 2008 or earlier
 #include <stddef.h>     // intptr_t
@@ -148,6 +149,7 @@
 // Changes to this backend using new APIs should be accompanied by a regenerated stripped loader version.
 #define IMGL3W_IMPL
 #include "ImGUIOpenGLRenderer.h"
+#include "backends/imgui_impl_opengl3_loader.h"
 #endif
 
 // Vertex arrays are not supported on ES2/WebGL1 unless Emscripten which uses an extension

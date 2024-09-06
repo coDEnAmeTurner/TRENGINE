@@ -6,6 +6,7 @@
 #include "../../Events/KeyReleasedEvent.h"
 #include "../../Events/MouseEvent.h"
 #include "../../../Log.h"
+#include "../../Events/KeyTypedEvent.h"
 
 namespace Trengine {
 
@@ -129,6 +130,14 @@ namespace Trengine {
 
 				MouseMovedEvent event((float)xPos, (float)yPos);
 				data.eventCallBack(event);
+			});
+
+		glfwSetCharCallback(window, [](GLFWwindow* window, unsigned int keycode) {
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+				KeyTypedEvent event(keycode);
+				data.eventCallBack(event);
+
 			});
 
 	}

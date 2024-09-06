@@ -21,10 +21,15 @@ namespace Trengine {
 
 		layerInsertIt = layers.emplace(layerInsertIt, layer);
 
+		layer->onAttach();
+
 	}
 
 	void LayerStack::PushOverlay(Layer* overlay) {
 		layers.emplace_back(overlay);
+
+		overlay->onAttach();
+
 	}
 
 	void LayerStack::PopLayer(Layer* layer) {
@@ -33,11 +38,16 @@ namespace Trengine {
 			layers.erase(it);
 			layerInsertIt--;
 		}
+
+		layer->onDetach();
 	}
 
 	void LayerStack::PopOverlay(Layer* overlay) {
 		layers.erase(layers.begin());
 		layerInsertIt--;
+
+		overlay->onDetach();
+
 	}
 
 }

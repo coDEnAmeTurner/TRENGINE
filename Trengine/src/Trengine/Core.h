@@ -32,3 +32,5 @@
 	#define TR_ASSERT(x, ...)
 	#define TR_CORE_ASSERT(x, ...)
 #endif
+
+#define HZ_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)

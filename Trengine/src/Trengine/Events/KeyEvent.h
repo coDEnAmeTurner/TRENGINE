@@ -6,8 +6,9 @@ namespace Trengine {
 	class TR_API KeyEvent : public Event {
 	protected:
 		int keyCode;
+
 		KeyEvent(int keycode)
-			: keyCode(keyCode) {
+			: keyCode(keycode) {
 
 		}
 

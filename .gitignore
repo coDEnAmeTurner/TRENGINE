@@ -11,3 +11,4 @@ bin-int/
 *.sln
 *.vcxproj
 *.vcxproj.filters
+*.vcxproj.filters.user

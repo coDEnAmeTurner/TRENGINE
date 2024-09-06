@@ -4,9 +4,7 @@
 
 #ifdef TR_PLATFORM_WINDOWS
 
-//define this somewhere else, in the client of the engine
-
-extern Trengine::Application* Trengine::CreateApplication(); 
+extern Trengine::Application* Trengine::CreateApplication();
 
 int main(int argc, char** argv) {
 	Trengine::Log::Init();
@@ -14,6 +12,7 @@ int main(int argc, char** argv) {
 	auto app = Trengine::CreateApplication();
 	app->Run();
 	delete app;
+
 }
 
 #endif // TR_PLATFORM_WINDOWS

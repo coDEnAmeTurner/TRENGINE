@@ -6,7 +6,10 @@
 
 namespace Trengine {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
+	Application* Application::instance;
+
 	Application::Application() {
+		instance = this;
 		window = CREATE_WINDOW;
 		//assume window is WindowsWindow, this will be modified in the future
 		window->setEventCallback(BIND_EVENT_FN(onEvent));
@@ -18,11 +21,7 @@ namespace Trengine {
 
 	Application* Application::getInstance()
 	{
-		if (!instance)
-			instance = CreateApplication();
-
 		return instance;
-
 	}
 
 	void Application::Run() {
@@ -33,9 +32,6 @@ namespace Trengine {
 
 		while (true)
 		{
-			glClearColor(1, 0, 1, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
-
 			window->onUpdate();
 
 			for (Layer* layer : layerStack)
@@ -50,5 +46,10 @@ namespace Trengine {
 
 			if (e.isHandled()) break;
 		}
+	}
+	
+	Window& Application::getWindow()
+	{
+		return *window;
 	}
 }

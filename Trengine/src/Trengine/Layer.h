@@ -3,11 +3,14 @@
 #include <string>
 #include "Trengine/Core.h"	
 #include "Trengine/Events/Event.h"
+#include "Trengine/Events/EventDispatcher.h"
 
 namespace Trengine {
 	class TR_API Layer {
 	protected:
 		std::string debugName;
+
+		EventDispatcher dispatcher;
 	public:
 		Layer(const std::string& name = "Layer");
 		virtual ~Layer();
