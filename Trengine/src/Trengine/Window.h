@@ -27,6 +27,7 @@ namespace Trengine {
 		virtual void setEventCallback(const EventCallbackFn& callback) = 0;
 		virtual void setVSync(bool enabled) = 0;
 		virtual bool isVSync() const = 0;
+		virtual void* GetNativeWindow() const = 0;
 
 		static Window* create(const WindowProps& props = WindowProps());
 		static void glfwErrorCallback(int error, const char* description) {

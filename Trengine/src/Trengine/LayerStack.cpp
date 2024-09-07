@@ -27,6 +27,7 @@ namespace Trengine {
 
 	void LayerStack::PushOverlay(Layer* overlay) {
 		layers.emplace_back(overlay);
+		layerInsertIt = --layers.end();
 
 		overlay->onAttach();
 
@@ -34,19 +35,24 @@ namespace Trengine {
 
 	void LayerStack::PopLayer(Layer* layer) {
 		auto it = std::find(layers.begin(), layers.end(), layer);
+
 		if (it != layers.end()) {
 			layers.erase(it);
 			layerInsertIt--;
+			layer->onDetach();
 		}
 
-		layer->onDetach();
 	}
 
-	void LayerStack::PopOverlay(Layer* overlay) {
-		layers.erase(layers.begin());
-		layerInsertIt--;
+	void LayerStack::PopOverlay() {
+		if (!layers.empty()) {
+			auto layer = *(layers.end());
+			layers.erase(layers.end());
+			layerInsertIt--;
 
-		overlay->onDetach();
+			layer->onDetach();
+
+		}
 
 	}
 

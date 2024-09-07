@@ -12,22 +12,16 @@ namespace Trengine {
 	private:
 		float time = 0.0f;
 
-		bool onMouseButtonPressedEvent(MouseButtonPressedEvent& e);
-		bool onMouseButtonReleaseEvent(MouseButtonReleasedEvent& e);
-		bool onMouseMovedEvent(MouseMovedEvent& e);
-		bool onMouseScrollEvent(MouseScrolledEvent& e);
-		bool onKeyPressedEvent(KeyPressedEvent& e);
-		bool onKeyReleasedEvent(KeyReleasedEvent& e);
-		bool onKeyTypedEvent(KeyTypedEvent& e);
-		bool onWindowResizeEvent(WindowResizeEvent& e);
 	public:
 		ImGUILayer() {};
 		~ImGUILayer() {};
 
 		void onAttach() override;
-		void onDetach() override {};
-		void onUpdate();
-		void onEvent(Event& event) override;
+		void onDetach() override;
+		void onImGuiRender() override;
+
+		void begin();
+		void end();
 	};
 
 }

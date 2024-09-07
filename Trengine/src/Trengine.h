@@ -14,6 +14,9 @@
 #include "Trengine/Events/MouseEvent.h"
 #include "Trengine/Layer.h"
 #include "Trengine/ImGui/ImGUILayer.h"
+#include "Trengine/Input.h"
+#include "Trengine/KeyCodes.h"
+#include "Trengine/MouseButtonCodes.h"
 
 //entry point
 #include "Trengine/EntryPoint.h"
