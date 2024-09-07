@@ -25,6 +25,10 @@
 
 #define EVENT_CLASS_CATEGORY(category) virtual int getCategoryFlags() const override {return category;}\
 
+#ifdef TR_DEBUG	
+	#define HZ_ENABLE_ASSERTS
+#endif
+
 #ifdef TR_ENABLE_ASSERTS
 	#define TR_ASSERT(x, ...) {if (!(x)) { TR_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();}}
 	#define TR_CORE_ASSERT(x, ...) {if (!(x)) { TR_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();}}

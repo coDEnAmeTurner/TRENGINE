@@ -18,7 +18,9 @@ namespace Trengine {
 		virtual void onAttach() {};
 		virtual void onDetach() {};
 		virtual void onUpdate() {};
-		virtual void onEvent(Event& event) {}
+		virtual void onEvent(Event& event) {};
+		virtual void onImGuiRender() {};
+
 
 		const std::string& getName() const { return debugName; }
 				

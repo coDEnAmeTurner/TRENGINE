@@ -4,11 +4,14 @@
 #include "Events/EventDispatcher.h"
 #include "Events/ApplicationEvent.h"
 #include "LayerStack.h"
+#include "ImGui/ImGUILayer.h"
 
 namespace Trengine {
 	class TR_API Application {
 	private:
 		std::unique_ptr<Window> window;
+		ImGUILayer* imGuiLayer;
+		bool onWindowCloseEvent(WindowCloseEvent& e);
 
 	protected:
 		static Application* instance;

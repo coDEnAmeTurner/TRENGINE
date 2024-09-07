@@ -25,6 +25,7 @@ project "Trengine"
     location "Trengine"
     kind "SharedLib"
     language "C++"
+    staticruntime "off"
 
     targetdir("bin/" .. outputdir .. "/%{prj.name}")
     objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -70,16 +71,19 @@ project "Trengine"
 
     filter "configurations:Debug" 
         defines "TR_DEBUG"
+        runtime "Debug"
         symbols "On"
         buildoptions "/MDd"
 
     filter "configurations:Release" 
         defines "TR_RELEASE"
+        runtime "Release"
         symbols "On"
         buildoptions "/MD"
 
     filter "configurations:Dist" 
         defines "TR_DIST"
+        runtime "Release"
         symbols "On"
         buildoptions "/MD"
 
@@ -87,6 +91,7 @@ project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
     language "C++"
+    staticruntime "off"
 
     targetdir("bin/" .. outputdir .. "/%{prj.name}")
     objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -119,15 +124,18 @@ project "Sandbox"
 
     filter "configurations:Debug" 
         defines "TR_DEBUG"
+        runtime "Debug"
         symbols "On"
         buildoptions "/MDd"
 
     filter "configurations:Release" 
         defines "TR_RELEASE"
+        runtime "Release"
         symbols "On"
         buildoptions "/MD"
 
     filter "configurations:Dist" 
         defines "TR_DIST"
+        runtime "Release"
         symbols "On"
         buildoptions "/MD"

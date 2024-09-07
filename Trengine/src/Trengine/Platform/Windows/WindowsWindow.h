@@ -18,10 +18,11 @@ namespace Trengine {
 		WindowData data;
 		virtual void init(const WindowProps& props);
 		virtual void shutDown();
+
 	public:
 		WindowsWindow(const WindowProps& props);
 		virtual ~WindowsWindow();
-
+		virtual void* GetNativeWindow() const { return window; }
 
 		unsigned int getWidth() const override { return data.width; }
 		unsigned int getHeight() const override { return data.height; }
