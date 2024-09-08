@@ -23,9 +23,10 @@ include "vendor/imgui"
 
 project "Trengine"
     location "Trengine"
-    kind "SharedLib"
+    kind "StaticLib"
     language "C++"
-    staticruntime "off"
+    staticruntime "on"
+    cppdialect "C++17"
 
     targetdir("bin/" .. outputdir .. "/%{prj.name}")
     objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -54,44 +55,38 @@ project "Trengine"
     }
 
     filter "system:windows" 
-        cppdialect "C++17"
-        staticruntime "On"  
         systemversion "latest"
 
         defines {
             "TR_PLATFORM_WINDOWS",
             "TR_BUILD_DLL",
 			"TR_ENABLE_ASSERTS", 
-            "GLFW_INCLUDE_NONE"
-        }
-
-        postbuildcommands {
-            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+            "GLFW_INCLUDE_NONE",
+            "_CRT_SECURE_NO_WARNINGS"
         }
 
     filter "configurations:Debug" 
         defines "TR_DEBUG"
         runtime "Debug"
-        symbols "On"
-        buildoptions "/MDd"
+        symbols "on"
 
     filter "configurations:Release" 
         defines "TR_RELEASE"
         runtime "Release"
         symbols "On"
-        buildoptions "/MD"
+        optimize "on"
 
     filter "configurations:Dist" 
         defines "TR_DIST"
         runtime "Release"
-        symbols "On"
-        buildoptions "/MD"
+        symbols "on"
 
 project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
     language "C++"
-    staticruntime "off"
+    staticruntime "on"
+    cppdialect "C++17"
 
     targetdir("bin/" .. outputdir .. "/%{prj.name}")
     objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -112,8 +107,6 @@ project "Sandbox"
     }
 
     filter "system:windows" 
-        cppdialect "C++17"
-        staticruntime "On"  
         systemversion "latest"
 
         defines {
@@ -126,16 +119,13 @@ project "Sandbox"
         defines "TR_DEBUG"
         runtime "Debug"
         symbols "On"
-        buildoptions "/MDd"
 
     filter "configurations:Release" 
         defines "TR_RELEASE"
         runtime "Release"
         symbols "On"
-        buildoptions "/MD"
 
     filter "configurations:Dist" 
         defines "TR_DIST"
         runtime "Release"
         symbols "On"
-        buildoptions "/MD"

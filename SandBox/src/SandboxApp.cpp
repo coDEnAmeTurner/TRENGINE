@@ -1,5 +1,6 @@
 #include "trpch.h"
 #include <Trengine.h>
+#include "../../vendor/imgui/imgui.h"
 
 class ExampleLayer : public Trengine::Layer {
 public: 
@@ -13,6 +14,12 @@ public:
 	void onEvent(Trengine::Event& e) override {
 		std::cout << e.toString() << "\n";
 		e.setHandled(true);
+	}
+
+	void onImGuiRender() override {
+		ImGui::Begin("Test");
+		ImGui::Text("Hello World");
+		ImGui::End();
 	}
 };
 
