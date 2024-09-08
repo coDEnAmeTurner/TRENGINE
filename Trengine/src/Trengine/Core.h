@@ -1,11 +1,15 @@
 #pragma once
 
 #ifdef TR_PLATFORM_WINDOWS
+#if TR_DYNAMIC_LINK
 	#ifdef TR_BUILD_DLL
 		#define TR_API _declspec(dllexport)
 	#else
 		#define TR_API _declspec(dllimport)
 	#endif
+#else
+	#define TR_API
+#endif
 #else
 	#error Trengine only supports Windows!
 #endif
