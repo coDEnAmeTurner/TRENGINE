@@ -1,5 +1,5 @@
 # Trengine
-Tuấn's Trengine
+## Build Trengine Solution Using Premake 
 - Rename premake5-GLFW.lua to "premake5.lua", and put in vendor/GLFW, with GLFW as a submodule
 - Rename premake5-GLAD.lua to "premake5.lua", and put in vendor/GLAD, with GLAD as a submodule
 - Rename premake5-ImGui.lua to "premake5.lua", and put in vendor/imgui, with imgui as a submodule
