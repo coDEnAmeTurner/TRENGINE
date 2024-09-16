@@ -6,12 +6,15 @@
 #include "LayerStack.h"
 #include "ImGui/ImGUILayer.h"
 
+
 namespace Trengine {
 	class TR_API Application {
 	private:
 		std::unique_ptr<Window> window;
 		ImGUILayer* imGuiLayer;
 		bool onWindowCloseEvent(WindowCloseEvent& e);
+		float lastFrameTime = 0.0f;
+
 
 	protected:
 		static Application* instance;
@@ -33,5 +36,6 @@ namespace Trengine {
 	};
 
 	Application* CreateApplication();
+	
 
 }

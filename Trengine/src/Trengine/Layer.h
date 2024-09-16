@@ -4,6 +4,7 @@
 #include "Trengine/Core.h"	
 #include "Trengine/Events/Event.h"
 #include "Trengine/Events/EventDispatcher.h"
+#include "Trengine/Timestep.h"
 
 namespace Trengine {
 	class TR_API Layer {
@@ -17,7 +18,7 @@ namespace Trengine {
 
 		virtual void onAttach() {};
 		virtual void onDetach() {};
-		virtual void onUpdate() {};
+		virtual void onUpdate(Timestep timeStep) {};
 		virtual void onEvent(Event& event) {};
 		virtual void onImGuiRender() {};
 

@@ -17,6 +17,15 @@
 #include "Trengine/Input.h"
 #include "Trengine/KeyCodes.h"
 #include "Trengine/MouseButtonCodes.h"
+#include "Trengine/Renderer/Buffer.h"
+#include "Trengine/Renderer/VertexArray.h"
+#include "Trengine/Renderer/Shader.h"
+#include "Trengine/Platform/OpenGL/OpenglShader.h"
+#include "Trengine/Renderer/OrthographicCamera.h"
+#include "Trengine/Renderer/Renderer.h"
+#include "Trengine/Renderer/RendererAPI.h"
+#include "Trengine/Renderer/RenderCommand.h"
+#include "Trengine/Timestep.h"
 
 //entry point
 #include "Trengine/EntryPoint.h"

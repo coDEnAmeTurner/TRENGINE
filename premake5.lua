@@ -14,6 +14,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "vendor/GLFW/include"
 IncludeDir["GLAD"] = "vendor/GLAD/include"
 IncludeDir["ImGui"] = "vendor/imgui"
+IncludeDir["glm"] = "vendor/glm"
 
 include "vendor/GLFW"
 
@@ -44,7 +45,8 @@ project "Trengine"
         "%{prj.name}/src/../../vendor/spdlog/include",
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.GLAD}",
-        "%{IncludeDir.ImGui}"
+        "%{IncludeDir.ImGui}",
+        "%{IncludeDir.glm}"
     }
 
     links {
@@ -94,11 +96,14 @@ project "Sandbox"
     files {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
+        "%{prj.name}/vendor/glm/glm/**.hpp",
+        "%{prj.name}/vendor/glm/glm/**.inl",
     }
 
     includedirs {
         "%{prj.name}/src/../../vendor/spdlog/include",
         "%{prj.name}/src/../../vendor/GLFW/include",
+        "%{IncludeDir.glm}",
         "Trengine/src"
     }
 
