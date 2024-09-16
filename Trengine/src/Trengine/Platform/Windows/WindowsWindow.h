@@ -1,11 +1,13 @@
 #pragma once
 #include "../../Window.h"
 #include "GLFW/glfw3.h"
+#include "../../Renderer/GraphicsContext.h"
 
 namespace Trengine {
 	class WindowsWindow : public Window {
 	private:
 		GLFWwindow* window;
+		GraphicsContext* context;
 
 		struct WindowData {
 			std::string title;

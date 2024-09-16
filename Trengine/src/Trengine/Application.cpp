@@ -3,6 +3,8 @@
 #include "Platform/Windows/WindowsWindow.h"
 #include "../Log.h"
 #include "glad/glad.h"
+#include "Renderer/Renderer.h"
+#include "Renderer/RenderCommand.h"
 
 namespace Trengine {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
@@ -15,7 +17,8 @@ namespace Trengine {
 		return true;
 	}
 
-	Application::Application() {
+	Application::Application() 
+	{
 		instance = this;
 
 		window = CREATE_WINDOW;
@@ -24,6 +27,8 @@ namespace Trengine {
 
 		this->imGuiLayer = new ImGUILayer();
 		layerStack.PushOverlay(imGuiLayer);
+
+		
 	};
 
 	Application::~Application() {
@@ -39,12 +44,13 @@ namespace Trengine {
 
 		while (!glfwWindowShouldClose(static_cast<GLFWwindow*>(window->GetNativeWindow())))
 		{
-			glClearColor(0, 0, 0, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
+			float time = (float)glfwGetTime();
+			Timestep timeStep = time - lastFrameTime;
+			lastFrameTime = time;
 
 			for (Layer* layer : layerStack)
-				layer->onUpdate();
-
+				layer->onUpdate(timeStep);
+			
 			imGuiLayer->begin();
 			for (Layer* layer : layerStack)
 				layer->onImGuiRender();

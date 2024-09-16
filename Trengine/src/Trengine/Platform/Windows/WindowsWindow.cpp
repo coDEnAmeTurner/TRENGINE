@@ -7,6 +7,7 @@
 #include "../../Events/MouseEvent.h"
 #include "../../../Log.h"
 #include "../../Events/KeyTypedEvent.h"
+#include "../OpenGL/OpenGLContext.h"
 
 namespace Trengine {
 
@@ -43,9 +44,11 @@ namespace Trengine {
 		}
 
 		window = glfwCreateWindow((int)props.width, (int)props.height, data.title.c_str(), nullptr, NULL);
-		glfwMakeContextCurrent(window);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		TR_CORE_ASSERT(status, "Failed to initialize Glad!");
+
+		context = new OpenGLContext(window);
+
+		context->init();
+		
 		glfwSetWindowUserPointer(window, &data);
 		setVSync(true);
 
@@ -144,7 +147,7 @@ namespace Trengine {
 
 	void WindowsWindow::onUpdate() {
 		glfwPollEvents();
-		glfwSwapBuffers(window);
+		context->swapBuffers();
 	}
 
 	void WindowsWindow::setVSync(bool enabled) {
