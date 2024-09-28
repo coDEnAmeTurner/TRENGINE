@@ -8,6 +8,15 @@ namespace Trengine {
 		// Inherited via RendererAPI
 		void setClearColor(const glm::vec4& color) override;
 		void clear() override;
+
+		void init() override;
+		
+		void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t indexCount) override;
+
 		void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) override;
+
+		// Inherited via RendererAPI
+		void setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) override;
+
 	};
 }

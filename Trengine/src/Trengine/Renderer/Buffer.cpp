@@ -6,6 +6,10 @@
 
 
 namespace Trengine {
+    VertexBuffer* VertexBuffer::Create(uint32_t size) {
+        return Create(nullptr, size);
+    }
+
     VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size)
     {
         switch (Renderer::GetAPI()) {

@@ -7,6 +7,7 @@ namespace Trengine {
 	private:
 		uint32_t rendererID;
 	public:
+		OpenGLVertexBuffer(uint32_t size);
 		OpenGLVertexBuffer(float* vertices, uint32_t size);
 		virtual ~OpenGLVertexBuffer() override;
 
@@ -15,9 +16,9 @@ namespace Trengine {
 
 		// Inherited via VertexBuffer
 		void setLayout(const BufferLayout& layout) override;
-
 		BufferLayout& getLayout() override;
 
+		void setData(const void* data, uint32_t size) override;
 	};
 
 	class OpenGLIndexBuffer : public IndexBuffer {

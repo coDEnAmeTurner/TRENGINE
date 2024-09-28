@@ -1,18 +1,33 @@
 #include "trpch.h"
 #include "Application.h"
-#include "Platform/Windows/WindowsWindow.h"
-#include "../Log.h"
+#include "Trengine/Platform/Windows/WindowsWindow.h"
+#include "Log.h"
 #include "glad/glad.h"
-#include "Renderer/Renderer.h"
-#include "Renderer/RenderCommand.h"
+#include "Trengine/Renderer/Renderer.h"
+#include "Trengine/Renderer/RenderCommand.h"
 
 namespace Trengine {
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
+	#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
+
 	Application* Application::instance;
 
 	bool Application::onWindowCloseEvent(WindowCloseEvent& e)
 	{
 		glfwSetWindowShouldClose(static_cast<GLFWwindow*>(instance->getWindow().GetNativeWindow()), true);
+
+		return true;
+	}
+
+	bool Application::onWindowResized(WindowResizeEvent& e)
+	{
+		if (e.GetWidth() == 0 || e.GetHeight() == 0) {
+			minimized = true;
+			return false;
+		}
+
+		minimized = false;
+
+		Renderer::onWindowResize(e.GetWidth(), e.GetHeight());
 
 		return true;
 	}
@@ -24,6 +39,8 @@ namespace Trengine {
 		window = CREATE_WINDOW;
 		//assume window is WindowsWindow, this will be modified in the future
 		window->setEventCallback(BIND_EVENT_FN(onEvent));
+
+		Renderer::init();
 
 		this->imGuiLayer = new ImGUILayer();
 		layerStack.PushOverlay(imGuiLayer);
@@ -63,6 +80,7 @@ namespace Trengine {
 	void Application::onEvent(Event& e) {
 		EventDispatcher dispatcher(&e);
 		dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowCloseEvent));
+		dispatcher.dispatch<WindowResizeEvent>(BIND_EVENT_FN(onWindowResized));
 
 		for (auto it = layerStack.end(); it != layerStack.begin();)
 		{

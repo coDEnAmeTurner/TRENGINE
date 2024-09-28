@@ -1,10 +1,10 @@
 #pragma once
 
 #include <string>
-#include "Trengine/Core.h"	
+#include "Trengine/Core/Core.h"	
 #include "Trengine/Events/Event.h"
 #include "Trengine/Events/EventDispatcher.h"
-#include "Trengine/Timestep.h"
+#include "Trengine/Core/Timestep.h"
 
 namespace Trengine {
 	class TR_API Layer {

@@ -1,5 +1,5 @@
 #pragma once
-#include "../../Window.h"
+#include "Trengine/Core/Window.h"
 #include "GLFW/glfw3.h"
 #include "../../Renderer/GraphicsContext.h"
 

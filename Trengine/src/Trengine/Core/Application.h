@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Window.h"
-#include "Events/EventDispatcher.h"
-#include "Events/ApplicationEvent.h"
+#include "Trengine/Events/EventDispatcher.h"
+#include "Trengine/Events/ApplicationEvent.h"
 #include "LayerStack.h"
-#include "ImGui/ImGUILayer.h"
+#include "Trengine/ImGui/ImGUILayer.h"
 
 
 namespace Trengine {
@@ -13,8 +13,9 @@ namespace Trengine {
 		std::unique_ptr<Window> window;
 		ImGUILayer* imGuiLayer;
 		bool onWindowCloseEvent(WindowCloseEvent& e);
+		bool onWindowResized(WindowResizeEvent& e);
 		float lastFrameTime = 0.0f;
-
+		bool minimized = false;
 
 	protected:
 		static Application* instance;

@@ -1,6 +1,6 @@
 #pragma once
-#include "../Log.h"
-#include "Events/ApplicationEvent.h"
+#include "Log.h"
+#include "Trengine/Events/ApplicationEvent.h"
 
 #ifdef TR_PLATFORM_WINDOWS
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "../Core.h"
+#include "Trengine/Core/Core.h"
 #include "spdlog/spdlog.h"
 
 namespace Trengine {

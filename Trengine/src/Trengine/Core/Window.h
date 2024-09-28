@@ -1,7 +1,7 @@
 #pragma once
 #include "Core.h"
-#include "../Log.h"
-#include "Events/Event.h"
+#include "../../Log.h"
+#include "Trengine/Events/Event.h"
 
 namespace Trengine {
 	using uint = unsigned int;
