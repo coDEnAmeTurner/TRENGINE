@@ -5,6 +5,8 @@
 
 //core
 #include "Trengine/Core/Core.h"
+
+//application
 #include "Trengine/Core/Application.h"
 #include "Trengine/Events/Event.h"
 #include "Trengine/Events/ApplicationEvent.h"
@@ -17,6 +19,8 @@
 #include "Trengine/Core/Input.h"
 #include "Trengine/Core/KeyCodes.h"
 #include "Trengine/Core/MouseButtonCodes.h"
+
+//Renderer
 #include "Trengine/Renderer/Buffer.h"
 #include "Trengine/Renderer/VertexArray.h"
 #include "Trengine/Renderer/Shader.h"
@@ -28,6 +32,9 @@
 #include "Trengine/Renderer/RendererAPI.h"
 #include "Trengine/Renderer/RenderCommand.h"
 #include "Trengine/Renderer/Texture.h"
+#include "Trengine/Renderer/SubTexture2D.h"
+
+//Debug
 #include "Trengine/Core/Timestep.h"
 #include "Timer.h"
 

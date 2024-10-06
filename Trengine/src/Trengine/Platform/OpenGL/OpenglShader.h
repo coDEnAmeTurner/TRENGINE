@@ -23,7 +23,6 @@ namespace Trengine {
 		OpenGLShader(const std::string& filepath);
 
 		void setUniformInt(const std::string& name, int values);
-		void setUniformIntArray(const std::string& name, int* values, uint32_t count);
 
 		void setUniformFloat(const std::string& name, float values);
 		void setUniformFloat2(const std::string& name, const glm::vec2& values);
@@ -33,5 +32,6 @@ namespace Trengine {
 		void setUniformMat3(const std::string& name, const glm::mat3& matrix);
 		void setUniformMat4(const std::string& name, const glm::mat4& matrix);
 
+		void setUniformIntArray(const std::string& name, int* values, uint32_t count);
 	};
 }

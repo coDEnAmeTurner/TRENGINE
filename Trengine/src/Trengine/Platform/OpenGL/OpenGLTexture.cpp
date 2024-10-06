@@ -5,6 +5,7 @@
 #include "glad/glad.h"
 
 namespace Trengine {
+
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
 		: path(path)
 	{
@@ -36,7 +37,7 @@ namespace Trengine {
 		glTextureParameteri(rendererID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		glTextureSubImage2D(rendererID, 0, 0, 0, width, height, dataFormat, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
+		//glGenerateMipmap(GL_TEXTURE_2D);
 
 		stbi_image_free(data);
 	}
@@ -65,7 +66,6 @@ namespace Trengine {
 	void OpenGLTexture2D::bind(uint32_t slot) const
 	{
 		glBindTextureUnit(slot, rendererID);
-
 	}
 
 	void OpenGLTexture2D::setData(void* data, uint32_t size)

@@ -23,13 +23,13 @@ namespace Trengine {
         return NULL;
     }
 
-    IndexBuffer* IndexBuffer::Create(unsigned int* indices, uint32_t size)
+    IndexBuffer* IndexBuffer::Create(unsigned int* indices, uint32_t count)
     {
         switch (Renderer::GetAPI()) {
         case RendererAPI::API::None:
             TR_CORE_ASSERT(false, "Renderer::None is not supported!");
         case RendererAPI::API::OpenGL:
-            return new OpenGLIndexBuffer(indices, size);
+            return new OpenGLIndexBuffer(indices, count);
         }
 
         TR_CORE_ASSERT(false, "Unknown RendererAPI");

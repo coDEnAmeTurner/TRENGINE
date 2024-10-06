@@ -18,21 +18,16 @@ namespace Trengine {
 
 		virtual uint32_t getWidth() const override { return width; }
 		virtual uint32_t getHeight() const override { return height; }
+		virtual uint32_t getRendererId() const { return rendererID; }
 
 		virtual void bind(uint32_t slot) const override;
 
 		virtual void setData(void* data, uint32_t size) override;
 
-		bool operator == (const Texture2D& other) {
-			OpenGLTexture2D parsed = *(OpenGLTexture2D*)&other;
+		/*bool operator == (const std::shared_ptr<Texture2D>& other) {
 
-			return path == parsed.path
-				&& width == parsed.width
-				&& height == parsed.height
-				&& internalFormat == parsed.internalFormat
-				&& dataFormat == parsed.dataFormat
-				&& rendererID == parsed.rendererID;
-		}
+			return rendererID == (std::dynamic_pointer_cast<OpenGLTexture2D>(other))->rendererID;
+		}*/
 
 	};
 }

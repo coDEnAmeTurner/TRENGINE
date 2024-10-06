@@ -161,6 +161,7 @@ namespace Trengine {
 		bind();
 		GLint location = glGetUniformLocation(rendererID, name.c_str());
 		glUniform1iv(location, count, values);
+
 	}
 
 	void OpenGLShader::setUniformFloat(const std::string& name, float values)
