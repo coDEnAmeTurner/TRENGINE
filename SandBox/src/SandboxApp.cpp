@@ -4,186 +4,132 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-class ExampleLayer : public Trengine::Layer {
+class SandBox2D : public Trengine::Layer {
 private:
-	std::shared_ptr<Trengine::VertexArray> vertexArray;
-	std::shared_ptr<Trengine::Shader> shader;
-	std::shared_ptr<Trengine::Shader> solidColorShader;
-	Trengine::OrthographicCamera camera;
-	glm::vec3 tranform;
+	Trengine::OrthographicCameraController cameraController;
+	std::shared_ptr<Trengine::Texture2D> leviTexture;
+	std::shared_ptr<Trengine::Texture2D> interiorSpriteSheet;
+	std::shared_ptr<Trengine::Texture2D> houseBuilderSpriteSheet;
+	std::shared_ptr<Trengine::SubTexture2D> chairTexture;
+	
 	glm::vec4 uColor;
-public: 
-	ExampleLayer()
-		: Layer("Layer 1"), camera(-4, 4, -4.5 / 2, 4.5 / 2), tranform(0, 0, 0), uColor({ 1, 1, 1, 1 })
 
+	const uint32_t mapWidth = 24;
+	uint32_t mapHeight;
+	const char* mapTiles =
+		"BBBBBBBBBBBBBBBBBBBBBBBB"
+		"BBBBBBBBBBBBBBBBBBBBBBBB"
+		"BBBBBBBBBBBBBBBBBBBBBBBB"
+		"BBBOOOOBBBBBBBBBBBBBBBBB"
+		"BBBOOOOBBBBBBBBBBBBBBBBB"
+		"BBBOOOOBBBBBBBBBBBBBBBBB"
+		"BBBOOOOBBBBBBBBBBBBBBBBB"
+		"BBBBBBBBBBBBBOOOOBBBBBBB"
+		"BBBBBBBBBBBBBOOOOBBBBBBB"
+		"BBBBBBBBBBBBBOOOOBBBBBBB"
+		"BBBBBBBBBBBBBOOOOBBBBBBB"
+		"BBBOOOOBBBBBBBBBBBBBBBBB"
+		"BBBOOOOBBBBBBBBBBBBBBBBB"
+		"BBBOOOOBBBBBBBBBBBBBBBBB"
+		"BBBOOOOBBBBBBBBBBBBBBBBB"
+		"BBBBBBBBBBBBBBBBBBBBBBBB"
+		"BBBBBBBBBBBBBBBBBBBBBBBB"
+		"BBBBBBBBOOOOOOBBBBBBBBBB"
+		"BBBBBBBBOOOOOOBBBBBBBBBB"
+		"BBBBBBBBOOOOOOBBBBBBBBBB"
+		"BBBBBBBBOOOOOOBBBBBBBBBB";
+
+	std::unordered_map<char, std::shared_ptr<Trengine::SubTexture2D>> textureMap;
+
+	struct ProfileResult
 	{
-		float vertices[7 * 4] = {
-			-0.5f, -0.5f, 0.0f, 1.f, 1.0f, 0.0f, 1.0f,
-			0.5f, -0.5f, 0.0f, 1.f, 0.0f, 0.5f, 1.0f,
-			0.5f, 0.5f, 0.0f, 1.f, 0.6f, 0.1f, 1.0f,
-			-0.5f, 0.5f, 0.0f, 1.f, 0.6f, 0.1f, 1.0f,
-		};
+		const char* name;
+		float time;
+	};
+	std::vector<ProfileResult> profileResults;
+public:
+	SandBox2D()
+		: Layer("SandBox2D"), uColor({ 0, 0, 1, 1 }), cameraController(16 / 9.0, true)
+	{
+		leviTexture = Trengine::Texture2D::create("assets/textures/transparent_levi_ackerman.png");
+		interiorSpriteSheet = Trengine::Texture2D::create("assets/game/Modern tiles_Free/Interiors_free/48x48/Interiors_free_48x48.png");
+		houseBuilderSpriteSheet = Trengine::Texture2D::create("assets/game/Modern tiles_Free/Interiors_free/48x48/Room_Builder_free_48x48.png");
 
-		vertexArray.reset(Trengine::VertexArray::Create());
+		mapHeight = strlen(mapTiles) / mapWidth;
 
-		std::shared_ptr<Trengine::VertexBuffer> vertexBuffer;
-		vertexBuffer.reset(Trengine::VertexBuffer::Create(vertices, sizeof(vertices)));
+		textureMap['O'] = Trengine::SubTexture2D::CreateFromCoords(houseBuilderSpriteSheet, { 11,12 }, { 48, 48 }, { 1, 1 });
+		textureMap['B'] = Trengine::SubTexture2D::CreateFromCoords(houseBuilderSpriteSheet, { 11,16 }, { 48, 48 }, { 1, 1 });
 
-		Trengine::BufferLayout layout = {
-			{Trengine::ShaderDataType::Float3, "a_Position"},
-			{Trengine::ShaderDataType::Float4, "a_Color"}
-		};
-		vertexBuffer->setLayout(layout);
-
-		vertexArray->addVertexBuffer(vertexBuffer);
-
-		unsigned int indices[6] = {
-			0, 1, 2,
-			0, 2, 3
-		};
-
-		vertexArray->addIndexBuffer(std::shared_ptr<Trengine::IndexBuffer>(Trengine::IndexBuffer::Create(indices, sizeof(indices))));
-
-		std::string vertexSrc = R"(
-			#version 330 core
-
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Color;
-			
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Transform;
-
-			out vec4 v_Color;
-
-			void main() {
-				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
-				v_Color = a_Color;
-			}
-		)";
-
-		std::string fragmentSrc = R"(
-			#version 330 core
-
-			in vec4 v_Color;
-
-			uniform vec4 u_Color;
-
-			layout(location = 0) out vec4 color;
-
-			void main() {
-				color = u_Color;
-			}
-		)";
-
-		std::string solidFragmentSrc = R"(
-			#version 330 core
-			
-			in vec4 v_Color;
-
-			uniform vec4 u_Color;
-
-			layout(location = 0) out vec4 color;
-
-			void main() {
-				color = u_Color;
-			}
-		)";
-
-		shader.reset(new Trengine::OpenGLShader(vertexSrc, fragmentSrc));
-		solidColorShader.reset(new Trengine::OpenGLShader(vertexSrc, solidFragmentSrc));
+		chairTexture = Trengine::SubTexture2D::CreateFromCoords(interiorSpriteSheet, { 13,26 }, { 48, 48 }, { 1, 2 });
 	}
 
-
 	void onUpdate(Trengine::Timestep timeStep) {
+		Trengine::Renderer2D::resetStats();
+
+		SET_TIMER_SCOPE("SandBox2D:onUpdate");
+
 		Trengine::RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		Trengine::RenderCommand::clear();
 
-		glm::vec3 cameraPosition = camera.getPosition();
-		float cameraRotation = camera.getRotation();
+		{
+			SET_TIMER_SCOPE("CameraController:onUpdate");
 
-		float cameraMoveSpeed = 0.9f;
-		float cameraRotationSpeed = 8.7f;
+			cameraController.onUpdate(timeStep);
+		}
 
-		if (Trengine::Input::isKeyPressed(TR_KEY_LEFT))
-			cameraPosition.x -= cameraMoveSpeed * timeStep;	
+		Trengine::Renderer2D::beginScene((Trengine::OrthographicCamera&)cameraController.getCamera());
 
-		if (Trengine::Input::isKeyPressed(TR_KEY_RIGHT))
-			cameraPosition.x += cameraMoveSpeed * timeStep;
+		for (uint32_t y = 0; y < mapHeight; y++) {
+			for (uint32_t x = 0; x < mapWidth; x++) {
+				char tileType = mapTiles[x + y * mapWidth];
 
-		if (Trengine::Input::isKeyPressed(TR_KEY_UP))
-			cameraPosition.y += cameraMoveSpeed * timeStep;
+				std::shared_ptr<Trengine::SubTexture2D> texture;
 
-		if (Trengine::Input::isKeyPressed(TR_KEY_DOWN))
-			cameraPosition.y -= cameraMoveSpeed * timeStep;
-
-		if (Trengine::Input::isKeyPressed(TR_KEY_A))
-			cameraRotation -= cameraRotationSpeed * timeStep;
-
-		if (Trengine::Input::isKeyPressed(TR_KEY_D))
-			cameraRotation += cameraRotationSpeed * timeStep;
-
-		glm::vec3 squarePosition = tranform;
-		float squareMoveSpeed = 0.9f;
-
-		if (Trengine::Input::isKeyPressed(TR_KEY_J))
-			squarePosition.x -= squareMoveSpeed * timeStep;
-
-		if (Trengine::Input::isKeyPressed(TR_KEY_L))
-			squarePosition.x += squareMoveSpeed * timeStep;
-
-		if (Trengine::Input::isKeyPressed(TR_KEY_I))
-			squarePosition.y += squareMoveSpeed * timeStep;
-
-		if (Trengine::Input::isKeyPressed(TR_KEY_K))
-			squarePosition.y -= squareMoveSpeed * timeStep;
-
-
-		camera.setPosition(cameraPosition);
-		camera.setRotation(cameraRotation);
-
-		tranform = squarePosition;
-
-		glm::vec4 redColor(0.8f, 0.2f, 0.3f, 1.0f);
-		glm::vec4 blueColor(0.2f, 0.3f, 0.8f, 1.0f);
-		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
-
-		Trengine::Renderer::beginScene(camera);
-
-		for (int y = 0; y < 20; y++) {
-			for (int x = 0; x < 20; x++) {
-				glm::vec3 pos(x * 0.3f, y * 0.3f, 0.f);
-				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-
-				Trengine::OpenGLShader* sCSObj = (Trengine::OpenGLShader*)solidColorShader.get();
-
-				if (x % 2 == 0)
-					sCSObj->uploadUniformFloat4("u_Color", redColor);
+				if (textureMap.find(tileType) != textureMap.end())
+					texture = textureMap[tileType];
 				else
-					sCSObj->uploadUniformFloat4("u_Color", blueColor);
+					texture = chairTexture;
 
-				Trengine::Renderer::submit(vertexArray, solidColorShader, transform);
+				Trengine::Renderer2D::drawQuadSubTexture({ x - mapWidth / 2.0f, mapHeight - y - mapHeight / 2.0f, 0.5f }, { 1, 1 }, 0, texture);
 			}
 		}
 
-		Trengine::OpenGLShader* sObj = (Trengine::OpenGLShader*)shader.get();
-		sObj->uploadUniformFloat4("u_Color", uColor);
+		Trengine::Renderer2D::endScene();
 
-		Trengine::Renderer::submit(vertexArray, shader, glm::translate(glm::mat4(1.0f), tranform));
-
-		Trengine::Renderer::endScene();
 	}
 
 	void onImGuiRender() {
 		ImGui::Begin("Settings");
 		ImGui::ColorEdit4("Main Square Color", glm::value_ptr(uColor));
+
+		for (auto& result : profileResults) {
+			char label[50];
+			strcpy(label, result.name);
+			strcat(label, " %.3fms");
+			ImGui::Text(label, result.time);
+		}
+		profileResults.clear();
+
+		auto stats = Trengine::Renderer2D::getStats();
+		ImGui::Text("Renderer2D Stats:");
+		ImGui::Text("Draw Calls: %d", stats.DrawCalls);
+		ImGui::Text("Quads: %d", stats.QuadCount);
+		ImGui::Text("Vertices: %d", stats.getTotalVertexCount());
+		ImGui::Text("Indices: %d", stats.getTotalIndexCount());
+
 		ImGui::End();
+
+	}
+
+	void onEvent(Trengine::Event& e) {
+		cameraController.onEvent(e);
 	}
 };
 
 class Sandbox : public Trengine::Application {
 public:
 	Sandbox() {
-		layerStack.PushLayer(new ExampleLayer());
+		layerStack.PushLayer(new SandBox2D());
 	}
 
 	~Sandbox() {

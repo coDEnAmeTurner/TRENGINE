@@ -8,9 +8,9 @@ namespace Trengine {
 	private:
 		static RendererAPI* rendererAPI;
 	public:
-		static void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray)
+		static void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t count = 0)
 		{
-			rendererAPI->drawIndexed(vertexArray);
+			rendererAPI->drawIndexed(vertexArray, count);
 		}
 
 		static void setClearColor(const glm::vec4& color) {
@@ -19,6 +19,14 @@ namespace Trengine {
 
 		static void clear() {
 			rendererAPI->clear();
+		}
+
+		static void init() {
+			rendererAPI->init();
+		}
+
+		static void setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
+			rendererAPI->setViewport(x, y, width, height);
 		}
 	};
 

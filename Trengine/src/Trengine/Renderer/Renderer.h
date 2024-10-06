@@ -1,18 +1,26 @@
-#pragma once
+#pragma once;
 #include "RendererAPI.h"
 #include "OrthographicCamera.h"
-#include "Shader.h"
+
 
 namespace Trengine {
+	class Shader;
+
 	class Renderer {
 	public:
-		static void beginScene(OrthographicCamera& camera);
+		static void init();
 
+		static void beginScene(const OrthographicCamera& camera);
 		static void endScene();
 
-		static void submit(const std::shared_ptr<VertexArray>& vertexArray, const std::shared_ptr<Shader>& shader, const glm::mat4& transform = glm::mat4(1.0f));
+		void submit(const std::shared_ptr<VertexArray>& vertexArray, 
+			const std::shared_ptr<Shader>& shader, 
+			const glm::mat4& transform);
+
+		static void onWindowResize(uint32_t width, uint32_t height);
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::getAPI(); }
+
 	private:
 		struct SceneData {
 			glm::mat4 viewProjectionMatrix;
@@ -22,5 +30,4 @@ namespace Trengine {
 	};
 
 	inline Renderer::SceneData* Renderer::sceneData = new Renderer::SceneData();
-
 }

@@ -1,6 +1,6 @@
 #pragma once
-#include "Trengine/Core.h"
-#include "Trengine/Layer.h"
+#include "Trengine/Core/Core.h"
+#include "Trengine/Core/Layer.h"
 #include "../Events/MouseEvent.h"
 #include "../Events/KeyPressedEvent.h"
 #include "../Events/KeyReleasedEvent.h"

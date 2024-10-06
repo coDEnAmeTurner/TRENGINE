@@ -80,9 +80,13 @@ namespace Trengine {
 		virtual ~VertexBuffer() {}
 		virtual void bind() const = 0;
 		virtual void unBind() const = 0;
+
 		virtual void setLayout(const BufferLayout& layout) = 0;
 		virtual BufferLayout& getLayout() = 0;
 
+		virtual void setData(const void* data, uint32_t size) = 0;
+
+		static VertexBuffer* Create(uint32_t size);
 		static VertexBuffer* Create(float* vertices, uint32_t size);
 	};
 

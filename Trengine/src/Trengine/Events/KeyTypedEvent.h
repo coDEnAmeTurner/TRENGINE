@@ -1,6 +1,6 @@
 #pragma once
 #include "trpch.h"
-#include "Trengine/Core.h"
+#include "Trengine/Core/Core.h"
 #include "Trengine/Events/KeyEvent.h"
 
 namespace Trengine {

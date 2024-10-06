@@ -1,5 +1,5 @@
 #pragma once
-#include "Trengine/Input.h"
+#include "Trengine/Core/Input.h"
 
 namespace Trengine {
 	class WindowsInput : public Input

@@ -1,7 +1,7 @@
 #include "trpch.h"
 #include "WindowsInput.h"
 #include "GLFW/glfw3.h"
-#include "Trengine/Application.h"
+#include "Trengine/Core/Application.h"
 
 namespace Trengine {
 	Input* Input::instance = new WindowsInput();

@@ -15,6 +15,7 @@ IncludeDir["GLFW"] = "vendor/GLFW/include"
 IncludeDir["GLAD"] = "vendor/GLAD/include"
 IncludeDir["ImGui"] = "vendor/imgui"
 IncludeDir["glm"] = "vendor/glm"
+IncludeDir["stb_image"] = "vendor/stb_image"
 
 include "vendor/GLFW"
 
@@ -38,6 +39,8 @@ project "Trengine"
     files {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
+        "%{prj.name}/../vendor/stb_image/**.h",
+        "%{prj.name}/../vendor/stb_image/**.cpp",
     }
 
     includedirs {
@@ -46,7 +49,8 @@ project "Trengine"
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.GLAD}",
         "%{IncludeDir.ImGui}",
-        "%{IncludeDir.glm}"
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.stb_image}"
     }
 
     links {
