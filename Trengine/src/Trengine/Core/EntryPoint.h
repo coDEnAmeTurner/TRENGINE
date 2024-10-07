@@ -1,8 +1,9 @@
 #pragma once
 #include "Log.h"
-#include "Trengine/Events/ApplicationEvent.h"
 
 #ifdef TR_PLATFORM_WINDOWS
+
+#ifndef TR_MAIN_DEFINED 
 
 extern Trengine::Application* Trengine::CreateApplication();
 
@@ -14,6 +15,9 @@ int main(int argc, char** argv) {
 	delete app;
 
 }
+
+
+#endif
 
 #endif // TR_PLATFORM_WINDOWS
 

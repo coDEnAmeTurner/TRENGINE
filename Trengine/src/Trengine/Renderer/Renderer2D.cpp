@@ -77,11 +77,13 @@ namespace Trengine {
 		delete data;
 	}
 
-	void Renderer2D::beginScene(const OrthographicCamera& camera)
+	void Renderer2D::beginScene(const Camera& camera, const glm::mat4& transform)
 	{
+		glm::mat4 viewProjection = camera.getProjection() * glm::inverse(transform);
+
 		OpenGLShader* textureShaderRef = (OpenGLShader*)data->textureShader.get();
 		textureShaderRef->bind();
-		textureShaderRef->setUniformMat4("u_ViewProjection", camera.getViewProjectionMatrix());
+		textureShaderRef->setUniformMat4("u_ViewProjection", viewProjection);
 
 		data->quadIndexCount = 0;
 		data->quadVertexBufferPtr = data->quadVertexBufferBase;
@@ -96,16 +98,7 @@ namespace Trengine {
 	}
 
 
-
-	void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, const float rotation, const glm::vec4& color)
-	{
-		if (data->quadIndexCount >= Renderer2DData::MaxIndices)
-			FlushAndReset();
-
-		drawQuad({ position.x, position.y, 0.0f }, size, rotation, color);
-	}
-
-	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const float rotation, const glm::vec4& color)
+	void Renderer2D::drawQuad(const glm::mat4& transform, const glm::vec4& color)
 	{
 		constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec2 textureCoords[] = {
@@ -117,10 +110,6 @@ namespace Trengine {
 
 		if (data->quadIndexCount >= Renderer2DData::MaxIndices)
 			FlushAndReset();
-
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) 
-			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), {0.0f, 0.0f, 1.0f})
-			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
 		for (size_t i = 0; i < quadVertexCount; i++) 
 		{
@@ -137,15 +126,7 @@ namespace Trengine {
 		stats.QuadCount++;
 	}
 
-	void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, const float rotation, const std::shared_ptr<Texture2D>& texture, const glm::vec4& color)
-	{
-		if (data->quadIndexCount >= Renderer2DData::MaxIndices)
-			FlushAndReset();
-
-		drawQuad({ position.x, position.y, 0.0f }, size, rotation, texture, color);
-	}
-
-	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const float rotation, const std::shared_ptr<Texture2D>& texture,
+	void Renderer2D::drawQuad(const glm::mat4& transform, const std::shared_ptr<Texture2D>& texture,
 		const glm::vec4& color)
 	{
 		constexpr size_t quadVertexCount = 4;
@@ -176,10 +157,6 @@ namespace Trengine {
 			data->textureSlotIndex++;
 		}
 
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
-			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
-			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-
 		for (size_t i = 0; i < quadVertexCount; i++)
 		{
 			data->quadVertexBufferPtr->position = transform * data->QuadVertexPositions[i];
@@ -195,18 +172,7 @@ namespace Trengine {
 		stats.QuadCount++;
 	}
 
-	void Renderer2D::drawQuadSubTexture(const glm::vec2& position, const glm::vec2& size, const float rotation, const std::shared_ptr<SubTexture2D>& subTexture, const glm::vec4& color)
-	{
-		drawQuadSubTexture(
-			{ position.x, position.y, 0.0f },
-			size,
-			rotation,
-			subTexture,
-			color
-		);
-	}
-
-	void Renderer2D::drawQuadSubTexture(const glm::vec3& position, const glm::vec2& size, const float rotation, const std::shared_ptr<SubTexture2D>& subTexture, const glm::vec4& color)
+	void Renderer2D::drawQuadSubTexture(const glm::mat4& transform, const std::shared_ptr<SubTexture2D>& subTexture, const glm::vec4& color)
 	{
 		constexpr size_t quadVertexCount = 4;
 
@@ -232,10 +198,6 @@ namespace Trengine {
 			data->textureSlots[data->textureSlotIndex] = texture;
 			data->textureSlotIndex++;
 		}
-
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
-			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
-			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
 		for (size_t i = 0; i < quadVertexCount; i++)
 		{

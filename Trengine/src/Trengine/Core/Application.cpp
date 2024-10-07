@@ -13,7 +13,7 @@ namespace Trengine {
 
 	bool Application::onWindowCloseEvent(WindowCloseEvent& e)
 	{
-		glfwSetWindowShouldClose(static_cast<GLFWwindow*>(instance->getWindow().GetNativeWindow()), true);
+		running = false;
 
 		return true;
 	}
@@ -22,7 +22,8 @@ namespace Trengine {
 	{
 		if (e.GetWidth() == 0 || e.GetHeight() == 0) {
 			minimized = true;
-			return false;
+
+			return true;
 		}
 
 		minimized = false;
@@ -59,14 +60,15 @@ namespace Trengine {
 
 	void Application::Run() {
 
-		while (!glfwWindowShouldClose(static_cast<GLFWwindow*>(window->GetNativeWindow())))
+		while (running)
 		{
 			float time = (float)glfwGetTime();
 			Timestep timeStep = time - lastFrameTime;
 			lastFrameTime = time;
 
-			for (Layer* layer : layerStack)
-				layer->onUpdate(timeStep);
+			if (!minimized)
+				for (Layer* layer : layerStack)
+					layer->onUpdate(timeStep);
 			
 			imGuiLayer->begin();
 			for (Layer* layer : layerStack)
@@ -93,5 +95,10 @@ namespace Trengine {
 	Window& Application::getWindow()
 	{
 		return *window;
+	}
+
+	void Application::Close()
+	{
+		this->running = false;
 	}
 }

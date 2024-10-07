@@ -33,7 +33,11 @@ namespace Trengine {
 
 		Window& getWindow();
 
+		void Close();
+
 		virtual ~Application();
+
+		ImGUILayer* getImGUILayer() { return imGuiLayer; }
 	};
 
 	Application* CreateApplication();

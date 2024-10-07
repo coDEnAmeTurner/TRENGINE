@@ -33,6 +33,15 @@
 #include "Trengine/Renderer/RenderCommand.h"
 #include "Trengine/Renderer/Texture.h"
 #include "Trengine/Renderer/SubTexture2D.h"
+#include "Trengine/Renderer/Framebuffer.h"
+
+//Scene
+#include "Trengine/Scene/Component.h"
+#include "Trengine/Scene/Scene.h"
+#include "Trengine/Scene/Entity.h"
+#include "Trengine/Scene/NativeScriptComponent.h"
+#include "Trengine/Scene/CameraController.h"
+#include "Trengine/Scene/Camera.h"
 
 //Debug
 #include "Trengine/Core/Timestep.h"

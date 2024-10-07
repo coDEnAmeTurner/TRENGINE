@@ -16,12 +16,18 @@ IncludeDir["GLAD"] = "vendor/GLAD/include"
 IncludeDir["ImGui"] = "vendor/imgui"
 IncludeDir["glm"] = "vendor/glm"
 IncludeDir["stb_image"] = "vendor/stb_image"
+IncludeDir["entt"] = "vendor/entt/include"
 
-include "vendor/GLFW"
+group "Dependencies"
 
-include "vendor/GLAD"
+    include "vendor/GLFW"
 
-include "vendor/imgui"
+    include "vendor/GLAD"
+
+    include "vendor/imgui"
+
+group ""
+
 
 project "Trengine"
     location "Trengine"
@@ -50,7 +56,8 @@ project "Trengine"
         "%{IncludeDir.GLAD}",
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.glm}",
-        "%{IncludeDir.stb_image}"
+        "%{IncludeDir.stb_image}",
+        "%{IncludeDir.entt}"
     }
 
     links {
@@ -87,6 +94,60 @@ project "Trengine"
         runtime "Release"
         symbols "on"
 
+project "Trengine Editor"
+    location "Trengine Editor"
+    kind "ConsoleApp"
+    language "C++"
+    staticruntime "on"
+    cppdialect "C++17"
+
+    targetdir("bin/" .. outputdir .. "/%{prj.name}")
+    objdir("bin-int/" .. outputdir .. "/%{prj.name}")
+
+    files {
+        "%{prj.name}/src/**.h",
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/vendor/glm/glm/**.hpp",
+        "%{prj.name}/vendor/glm/glm/**.inl",
+    }
+
+    includedirs {
+        "%{prj.name}/src/../../vendor/spdlog/include",
+        "%{prj.name}/src/../../vendor/GLFW/include",
+        "%{IncludeDir.glm}",
+        "Trengine/src",
+        "%{IncludeDir.entt}"
+    }
+
+    links {
+        "ImGui",
+        "Trengine"
+    }
+
+    filter "system:windows" 
+        systemversion "latest"
+
+        defines {
+            "TR_PLATFORM_WINDOWS",
+			"TR_ENABLE_ASSERTS",
+            "GLFW_INCLUDE_NONE"
+        }
+
+    filter "configurations:Debug" 
+        defines "TR_DEBUG"
+        runtime "Debug"
+        symbols "On"
+
+    filter "configurations:Release" 
+        defines "TR_RELEASE"
+        runtime "Release"
+        symbols "On"
+
+    filter "configurations:Dist" 
+        defines "TR_DIST"
+        runtime "Release"
+        symbols "On"
+
 project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
@@ -108,7 +169,8 @@ project "Sandbox"
         "%{prj.name}/src/../../vendor/spdlog/include",
         "%{prj.name}/src/../../vendor/GLFW/include",
         "%{IncludeDir.glm}",
-        "Trengine/src"
+        "Trengine/src",
+        "%{IncludeDir.entt}"
     }
 
     links {

@@ -44,6 +44,11 @@ namespace Trengine {
 		
 	}
 
+	void OrthographicCameraController::onResize(float width, float height) {
+		aspectRatio = width / height;
+		camera.setProjection(-aspectRatio * zoomLevel, aspectRatio * zoomLevel, -zoomLevel, zoomLevel);
+	}
+
 	void OrthographicCameraController::onEvent(Event& e)
 	{
 		EventDispatcher dispatcher(&e);
@@ -62,8 +67,8 @@ namespace Trengine {
 
 	bool OrthographicCameraController::onWindowResized(WindowResizeEvent& e)
 	{
-		aspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
-		camera.setProjection(-aspectRatio * zoomLevel, aspectRatio * zoomLevel, -zoomLevel, zoomLevel);
+		onResize((float)e.GetWidth(), (float)e.GetHeight());
+
 		return true;
 	}
 
