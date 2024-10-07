@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-#include "Trengine/Renderer/OrthographicCamera.h"
+#include "Trengine/Scene/Camera.h"
 #include "RendererAPI.h"
 #include "Trengine/Renderer/VertexArray.h"
 #include "Trengine/Renderer/Shader.h"
@@ -57,19 +57,12 @@ namespace Trengine {
 		static void init();
 		static void shutDown();
 
-		static void beginScene(const OrthographicCamera& camera);
+		static void beginScene(const Camera& camera, const glm::mat4& transform);
 		static void endScene();
 
-		static void drawQuad(const glm::vec2& position, const glm::vec2& size, const float rotation, const glm::vec4& color);
-		static void drawQuad(const glm::vec3& position, const glm::vec2& size, const float rotation, const glm::vec4& color);
-		static void drawQuad(const glm::vec2& position, const glm::vec2& size, const float rotation,
-			const std::shared_ptr<Texture2D>& texture, const glm::vec4& color = { 1, 1, 1, 1 });
-		static void drawQuad(const glm::vec3& position, const glm::vec2& size, const float rotation,
-			const std::shared_ptr<Texture2D>& texture, const glm::vec4& color = { 1, 1, 1, 1 });
-		static void drawQuadSubTexture(const glm::vec2& position, const glm::vec2& size, const float rotation,
-			const std::shared_ptr<SubTexture2D>& subTexture, const glm::vec4& color = { 1, 1, 1, 1 });
-		static void drawQuadSubTexture(const glm::vec3& position, const glm::vec2& size, const float rotation,
-			const std::shared_ptr<SubTexture2D>& subTexture, const glm::vec4& color = { 1, 1, 1, 1 });
+		static void drawQuad(const glm::mat4& transform, const glm::vec4& color);
+		static void drawQuad(const glm::mat4& transform, const std::shared_ptr<Texture2D>& texture, const glm::vec4& color = { 1, 1, 1, 1 });
+		static void drawQuadSubTexture(const glm::mat4& transform, const std::shared_ptr<SubTexture2D>& subTexture, const glm::vec4& color = { 1, 1, 1, 1 });
 
 		static const Renderer2DData* getData() { return data; }
 		static void setData(const std::shared_ptr<VertexArray>& quadVertexArray) {

@@ -18,7 +18,7 @@ namespace Trengine {
 
 		virtual uint32_t getWidth() const override { return width; }
 		virtual uint32_t getHeight() const override { return height; }
-		virtual uint32_t getRendererId() const { return rendererID; }
+		virtual uint32_t getRendererId() const override { return rendererID; }
 
 		virtual void bind(uint32_t slot) const override;
 

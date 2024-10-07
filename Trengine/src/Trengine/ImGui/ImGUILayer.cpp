@@ -44,10 +44,19 @@ void Trengine::ImGUILayer::onDetach()
 
 void Trengine::ImGUILayer::onImGuiRender() 
 {
+}
 
-	static bool show = true;
-	ImGui::ShowDemoWindow(&show);
+void Trengine::ImGUILayer::onEvent(Event& e) {
+	if (blockEvents)
+	{
+		ImGuiIO& io = ImGui::GetIO();
 
+		bool value = e.isHandled();
+		value |= e.isInCategory(EventCategoryMouse) & io.WantCaptureMouse;
+		value |= e.isInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
+
+		e.setHandled(value);
+	}
 }
 
 void Trengine::ImGUILayer::begin()
