@@ -7,14 +7,10 @@ namespace Trengine {
 	public:
 		EditorApp() {
 			layerStack.PushLayer(new EditorLayer());
-
-		
 		}
 
 		~EditorApp() {
 		}
-
-
 	};
 
 	//the client defines CreateApplication

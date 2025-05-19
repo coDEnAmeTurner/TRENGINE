@@ -34,7 +34,7 @@ namespace Trengine {
 		data.width = props.width;
 		data.height = props.height;
 
-		TR_CORE_INFO("Creating window {0} ({1}, {2])", props.title, props.width, props.height);
+		TR_CORE_INFO("Creating window {0} ({1}, {2}])", props.title, props.width, props.height);
 
 		if (!glfwInitialized) {
 			int success = glfwInit();

@@ -35,7 +35,7 @@ namespace Trengine {
 
 	void ShaderLibrary::add(const std::shared_ptr<Shader>& shader)
 	{
-		auto& name = shader->getName();
+		auto name = shader->getName();
 		TR_CORE_ASSERT(shaders.find(name) != shaders.end(), "Shader already exists!");
 		shaders[name] = shader;
 	}

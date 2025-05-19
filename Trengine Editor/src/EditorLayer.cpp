@@ -147,7 +147,18 @@ namespace Trengine {
 	}
 
 	void EditorLayer::onEvent( Event& e) {
-		mainCameraEntity->getComponent<NativeScriptComponent>().instance->onEvent(e);
+		if (!activeScene->ValidateEntity(*mainCameraEntity))
+		{
+			auto view = activeScene->reg().view<CameraComponent>();
+			for (auto& entity : view) {
+				if (activeScene->reg().get<CameraComponent>(entity).primary)
+					mainCameraEntity.reset(new Entity(entity, activeScene.get()));
+			}
+		}
+
+		//if primary camera entity truly doesn't exist
+		if (activeScene->ValidateEntity(*mainCameraEntity))
+			mainCameraEntity->getComponent<NativeScriptComponent>().instance->onEvent(e);
 	}
 
 }
