@@ -81,7 +81,7 @@ namespace Trengine {
 
 	};
 
-	inline Renderer2D::Renderer2DData* Renderer2D::data = new Renderer2D::Renderer2DData();
+	inline Renderer2D::Renderer2DData* Renderer2D::data = nullptr;
 
 	inline Renderer2D::Statistics Renderer2D::stats;
 }

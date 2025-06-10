@@ -24,7 +24,7 @@ HANDLE HeapAllocator::alloc(std::uint32_t size) {
 	std::vector<HandleEntry>::iterator worst_fit_it = std::max_element(
 		m_freeList.begin(),
 		m_freeList.end(),
-		[&](const HandleEntry& entry) {return entry.size >= size; }
+		[&](const HandleEntry& left, const HandleEntry& right) {return left.size < right.size && right.size >= size; }
 	);
 	/*printf("No suitable free block found: \nSize to alloc: %d\nCurrent free size: %d",
 		size,
@@ -38,7 +38,7 @@ HANDLE HeapAllocator::alloc(std::uint32_t size) {
 	HandleEntry& free_block = *worst_fit_it;
 	void* aligned_ptr = align_pointer(
 		(char*)free_block.ptr, 
-		std::max_element((size_t)MINIMUM_ALIGNMENT, free_block.size),
+		ternary_pred((size_t)MINIMUM_ALIGNMENT > free_block.size, (size_t)MINIMUM_ALIGNMENT, free_block.size),
 		reinterpret_cast<uintptr_t>((char*)free_block.ptr + free_block.size - 1)
 		);
 

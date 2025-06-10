@@ -12,9 +12,9 @@ void Trengine::ImGUILayer::onAttach()
 {
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; //navigation of UI using keyboard
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; //allow dragging imgui ui window outside the current Windows' window
 
 
 	ImGui::StyleColorsDark();
@@ -52,6 +52,9 @@ void Trengine::ImGUILayer::onEvent(Event& e) {
 		ImGuiIO& io = ImGui::GetIO();
 
 		bool value = e.isHandled();
+
+		//no need for dispatcher since no need for function to handle event
+		//if unhandled, either mouse event or key event makes it handled
 		value |= e.isInCategory(EventCategoryMouse) & io.WantCaptureMouse;
 		value |= e.isInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
 
@@ -72,11 +75,16 @@ void Trengine::ImGUILayer::end()
 	Application* app = Application::getInstance();
 	io.DisplaySize = ImVec2(app->getWindow().getWidth(), app->getWindow().getHeight());
 
+	//finalize the setup between begin and end
 	ImGui::Render();
+
+	//draw call of imgui
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	
 	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 	{
+		//call draw for other windows when multi viewport is enabled
+
 		GLFWwindow* backup_current_context = glfwGetCurrentContext();
 		ImGui::UpdatePlatformWindows();
 		ImGui::RenderPlatformWindowsDefault();

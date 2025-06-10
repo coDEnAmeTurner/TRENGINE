@@ -21,13 +21,12 @@ namespace Trengine {
 
 	void EditorLayer::onAttach() 
 	{
-
 		squareEntity = activeScene->createEntity("Square");
 		squareEntity->addComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 1.0f, 0.0f, 1.0f });
 		TR_CORE_INFO("Square Entity: {0}", squareEntity->getComponent<TagComponent>().tag);
 		
 		mainCameraEntity = activeScene->createEntity("Main Camera");
-		mainCameraEntity->addComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+		mainCameraEntity->addComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f), true);
 		mainCameraEntity->addComponent<NativeScriptComponent>().bind<CameraController>();
 	}
 
@@ -40,7 +39,6 @@ namespace Trengine {
 		RenderCommand::clear();
 
 		activeScene->onUpdate(timeStep);
-
 		Renderer2D::endScene();
 
 		frameBuffer->unBind();

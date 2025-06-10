@@ -53,6 +53,10 @@ namespace Trengine {
 		CameraComponent(const CameraComponent&) = default;
 		CameraComponent(const glm::mat4& projection)
 			: camera(projection) {}
+		CameraComponent(const glm::mat4& projection, bool primary)
+			: CameraComponent(projection) {
+			this->primary = primary;
+		}
 	};
 
 }

@@ -57,6 +57,7 @@ namespace Trengine {
 		uint32_t whiteTextureData = 0xffffffff;
 		data->whiteTexture->setData(&whiteTextureData, sizeof(uint32_t));
 
+		//specific texture shader goes with specific texture
 		data->textureShader = std::shared_ptr<Shader>(Shader::create("assets/shaders/Texture.glsl"));
 		int32_t samplers[data->MaxTextureSlots];
 		for (uint32_t i = 0; i < data->MaxTextureSlots; i++) {

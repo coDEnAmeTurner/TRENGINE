@@ -14,9 +14,9 @@ ThreadLTM::ThreadLTM(std::shared_ptr<JobQueue> queue, std::uint8_t core_id, std:
 {
 	assert(queue != nullptr);
 
-	m_stack = std::shared_ptr<StackAllocator>(new StackAllocator(WordSize * pow_of_2(17), MINIMUM_ALIGNMENT)); //1MB
-	m_doubleEndedStack = std::shared_ptr<DoubleEndedStackAllocator>(new DoubleEndedStackAllocator(WordSize * pow_of_2(18), MINIMUM_ALIGNMENT)); //2MB
-	m_doubleBuffers = std::shared_ptr<DoubledBufferedAllocator>(new DoubledBufferedAllocator(WordSize * pow_of_2(17), MINIMUM_ALIGNMENT)); //1MB
+	m_stack = std::shared_ptr<StackAllocator>(new StackAllocator(WORD_SIZE * pow_of_2(17), MINIMUM_ALIGNMENT)); //1MB
+	m_doubleEndedStack = std::shared_ptr<DoubleEndedStackAllocator>(new DoubleEndedStackAllocator(WORD_SIZE * pow_of_2(18), MINIMUM_ALIGNMENT)); //2MB
+	m_doubleBuffers = std::shared_ptr<DoubledBufferedAllocator>(new DoubledBufferedAllocator(WORD_SIZE * pow_of_2(17), MINIMUM_ALIGNMENT)); //1MB
 
 	m_thread = std::shared_ptr<std::thread>(new std::thread(&ThreadLTM::entryPointThread, this));
 }

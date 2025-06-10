@@ -20,13 +20,12 @@ namespace Trengine {
 	private:
 		float aspectRatio;
 		float zoomLevel = 1.0f;
-		OrthographicCamera camera;
-
 		bool rotation;
-
 		glm::vec3 cameraPosition = { 0.0f, 0.0f, 0.0f };
 		float cameraRotation = 0.0f;
 		float cameraTranslationSpeed = 3.0f, cameraRotationSpeed = 2.0f;
+
+		OrthographicCamera camera;
 	};
 
 }

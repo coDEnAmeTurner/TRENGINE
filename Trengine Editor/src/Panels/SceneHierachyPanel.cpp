@@ -80,9 +80,9 @@ void Trengine::SceneHierachyPanel::DrawEntityNode(Entity entity)
 
 	if (opened) {
 		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
-		bool opened = ImGui::TreeNodeEx((void*)9817239, flags, tag.c_str());
+		/*bool opened = ImGui::TreeNodeEx((void*)9817239, flags, tag.c_str());
 		if (opened)
-			ImGui::TreePop();
+			ImGui::TreePop();*/
 
 		ImGui::TreePop();
 	}

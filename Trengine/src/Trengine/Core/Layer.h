@@ -22,9 +22,6 @@ namespace Trengine {
 		virtual void onEvent(Event& event) {};
 		virtual void onImGuiRender() {};
 
-
 		const std::string& getName() const { return debugName; }
-				
-
 	};
 }

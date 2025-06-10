@@ -52,6 +52,7 @@ namespace Trengine {
 		glfwSetWindowUserPointer(window, &data);
 		setVSync(true);
 
+		//inherent callbakc setup for acquiring Windows Events into the architecture
 		glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);

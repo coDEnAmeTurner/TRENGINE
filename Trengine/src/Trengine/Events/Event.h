@@ -12,8 +12,8 @@ namespace Trengine {
 
 	enum EventCategory {
 		None = 0,
-		EventCategoryApplication = BIT(0),
-		EventCategoryInput = BIT(1),
+		EventCategoryApplication = BIT(0), //8 bytes with 1 at 1st LSB
+		EventCategoryInput = BIT(1), //8 bytes with 1 at 2nd LSB
 		EventCategoryKeyboard = BIT(2),
 		EventCategoryMouse = BIT(3),
 		EventCategoryMouseButton = BIT(4),

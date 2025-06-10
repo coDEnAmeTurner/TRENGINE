@@ -12,6 +12,7 @@ namespace Trengine {
 		this->texture = texture;
 	}
 
+	//sprite size: scalar to sprite size, keep it original with {1,1}
 	std::shared_ptr<SubTexture2D> SubTexture2D::CreateFromCoords(const std::shared_ptr<Texture2D>& texture, const glm::vec2& coords, const glm::vec2& cellSize, const glm::vec2& spriteSize)
 	{
 		glm::vec2 min = { (coords.x * cellSize.x) / texture->getWidth(), (coords.y * cellSize.y) / texture->getHeight() };

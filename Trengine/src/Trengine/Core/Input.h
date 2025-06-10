@@ -3,6 +3,7 @@
 #include "Trengine/Core/Core.h"
 
 namespace Trengine {
+	//singleton for checking input
 	class TR_API Input {
 	private:
 		static Input* instance;

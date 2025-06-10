@@ -71,7 +71,7 @@ void __stdcall FiberLTM::entryPointFiber(LPVOID p)
 	FiberLTM::incrementCounter(self->m_job->m_params->m_pCounter);
 	self->m_job->m_pEntryPoint(self->m_job->m_params);
 	assert(
-		self->m_job != nullptr && 
+		self->m_job != nullptr &&
 		self->m_job->m_params != nullptr &&
 		self->m_job->m_params->m_fiberParent != nullptr
 	);

@@ -16,7 +16,6 @@ namespace Trengine {
 		static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
 		static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
 	};
-
 }
 
 #define TR_CORE_TRACE(...) ::Trengine::Log::GetCoreLogger()->trace(__VA_ARGS__)

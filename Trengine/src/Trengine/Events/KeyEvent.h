@@ -17,6 +17,9 @@ namespace Trengine {
 			return keyCode;
 		}
 
+		//this allows this to happen: bool Event::IsInCategory(EventCategory category) {
+		//return GetCategoryFlags() & category;} and 
+		// IsInCategory(EventCategoryInput) returns true if the event belongs to that category.
 		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 		
 	};
