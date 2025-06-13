@@ -18,3 +18,5 @@ bin-int/
 *.exp
 *.lib
 *.pdb
+
+x64/

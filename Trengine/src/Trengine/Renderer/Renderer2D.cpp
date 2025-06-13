@@ -78,6 +78,18 @@ namespace Trengine {
 		delete data;
 	}
 
+	void Renderer2D::beginScene(const OrthographicCamera& camera, const glm::mat4& transform)
+	{
+		glm::mat4 viewProjection = camera.getProjection() * glm::inverse(transform);
+
+		OpenGLShader* textureShaderRef = (OpenGLShader*)data->textureShader.get();
+		textureShaderRef->bind();
+		textureShaderRef->setUniformMat4("u_ViewProjection", viewProjection);
+
+		data->quadIndexCount = 0;
+		data->quadVertexBufferPtr = data->quadVertexBufferBase;
+	}
+
 	void Renderer2D::beginScene(const Camera& camera, const glm::mat4& transform)
 	{
 		glm::mat4 viewProjection = camera.getProjection() * glm::inverse(transform);

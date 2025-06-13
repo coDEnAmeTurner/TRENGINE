@@ -5,6 +5,7 @@
 #include "Trengine/Renderer/VertexArray.h"
 #include "Trengine/Renderer/Shader.h"
 #include "Trengine/Renderer/SubTexture2D.h"
+#include "Trengine/Renderer/OrthographicCamera.h"
 
 namespace Trengine {
 	class Renderer2D
@@ -57,6 +58,7 @@ namespace Trengine {
 		static void init();
 		static void shutDown();
 
+		static void beginScene(const OrthographicCamera& camera, const glm::mat4& transform);
 		static void beginScene(const Camera& camera, const glm::mat4& transform);
 		static void endScene();
 
