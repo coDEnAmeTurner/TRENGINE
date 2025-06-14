@@ -13,6 +13,11 @@ namespace Trengine {
 			rendererAPI->drawIndexed(vertexArray, count);
 		}
 
+		static void drawIndexedSingle(const std::shared_ptr<VertexArray>& vertexArray, uint32_t count = 0)
+		{
+			rendererAPI->drawIndexedSingle(vertexArray, count);
+		}
+
 		static void setClearColor(const glm::vec4& color) {
 			rendererAPI->setClearColor(color);
 		}

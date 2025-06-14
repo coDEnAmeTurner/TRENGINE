@@ -46,7 +46,6 @@ namespace Trengine {
 		window = glfwCreateWindow((int)props.width, (int)props.height, data.title.c_str(), nullptr, NULL);
 
 		context = new OpenGLContext(window);
-
 		context->init();
 		
 		glfwSetWindowUserPointer(window, &data);

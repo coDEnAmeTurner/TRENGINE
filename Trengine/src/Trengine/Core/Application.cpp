@@ -26,7 +26,7 @@ namespace Trengine {
 		if (e.GetWidth() == 0 || e.GetHeight() == 0) {
 			minimized = true;
 
-			return true;
+			return false;
 		}
 
 		minimized = false;

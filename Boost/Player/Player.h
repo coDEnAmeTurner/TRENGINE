@@ -1,6 +1,4 @@
 #pragma once
-
-
 #include "../Color/Color.h"
 #include "../Random/Random.h"
 

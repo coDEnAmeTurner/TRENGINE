@@ -17,8 +17,8 @@ namespace Trengine {
 	void Renderer::submit(const std::shared_ptr<VertexArray>& vertexArray, const std::shared_ptr<Shader>& shader, const glm::mat4& transform)
 	{
 		shader->bind();
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->setUniformMat4("u_ViewProjection", sceneData->viewProjectionMatrix);
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->setUniformMat4("u_Transform", transform);
+		shader->setUniformMat4("u_ViewProjection", sceneData->viewProjectionMatrix);
+		shader->setUniformMat4("u_Transform", transform);
 
 		vertexArray->bind();
 		RenderCommand::drawIndexed(vertexArray);
@@ -28,6 +28,7 @@ namespace Trengine {
 	{
 		RenderCommand::init();
 		Renderer2D::init();
+		Renderer2D::initSingle();
 	}
 
 	void Renderer::onWindowResize(uint32_t width, uint32_t height)

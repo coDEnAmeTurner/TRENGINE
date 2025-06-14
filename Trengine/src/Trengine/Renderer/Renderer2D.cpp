@@ -118,9 +118,8 @@ namespace Trengine {
 	{
 		glm::mat4 viewProjection = camera.getProjection() * glm::inverse(transform);
 
-		OpenGLShader* textureShaderRef = (OpenGLShader*)data->textureShader.get();
-		textureShaderRef->bind();
-		textureShaderRef->setUniformMat4("u_ViewProjection", viewProjection);
+		data->textureShader->bind();
+		data->textureShader->setUniformMat4("u_ViewProjection", viewProjection);
 
 		data->quadIndexCount = 0;
 		data->quadVertexBufferPtr = data->quadVertexBufferBase;
@@ -128,8 +127,8 @@ namespace Trengine {
 
 	void Renderer2D::beginSceneSingle(const OrthographicCamera& camera)
 	{
-		data->textureShader->bind();
-		dataSingle->textureShader->setUniformMat4("u_ViewProjection", camera.getProjection());
+		dataSingle->textureShader->bind();
+		dataSingle->textureShader->setUniformMat4("u_ViewProjection", camera.getViewProjectionMatrix());
 	}
 
 	void Renderer2D::endScene()
@@ -292,7 +291,7 @@ namespace Trengine {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 		dataSingle->textureShader->setUniformMat4("u_Transform", transform);
 		dataSingle->quadVertexArray->bind();
-		RenderCommand::drawIndexed(dataSingle->quadVertexArray);
+		RenderCommand::drawIndexedSingle(dataSingle->quadVertexArray);
 	}
 	void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr<Texture2D>& texture)
 	{
@@ -307,7 +306,7 @@ namespace Trengine {
 		dataSingle->textureShader->setUniformMat4("u_Transform", transform);
 
 		dataSingle->quadVertexArray->bind();
-		RenderCommand::drawIndexed(dataSingle->quadVertexArray);
+		RenderCommand::drawIndexedSingle(dataSingle->quadVertexArray);
 	}
 	void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
 	{
@@ -323,7 +322,7 @@ namespace Trengine {
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 		dataSingle->textureShader->setUniformMat4("u_Transform", transform);
 		dataSingle->quadVertexArray->bind();
-		RenderCommand::drawIndexed(dataSingle->quadVertexArray);
+		RenderCommand::drawIndexedSingle(dataSingle->quadVertexArray);
 	}
 	void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const std::shared_ptr<Texture2D>& texture, const glm::vec4& color)
 	{
@@ -340,7 +339,7 @@ namespace Trengine {
 		dataSingle->textureShader->setUniformMat4("u_Transform", transform);
 
 		dataSingle->quadVertexArray->bind();
-		RenderCommand::drawIndexed(dataSingle->quadVertexArray);
+		RenderCommand::drawIndexedSingle(dataSingle->quadVertexArray);
 	}
 
 }
