@@ -11,8 +11,7 @@ namespace Trengine {
 
 	void OrthographicCamera::recalculateMatrix() {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
-			glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0, 0, 1)) *
-			glm::scale(glm::mat4(1.0f), {1 / scale.x, 1 / scale.y, 1 / scale.z});
+			glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0, 0, 1));
 
 		viewMatrix = glm::inverse(transform);
 		viewProjectionMatrix = projectionMatrix * viewMatrix;

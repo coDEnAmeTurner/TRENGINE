@@ -14,8 +14,8 @@ namespace Trengine {
 	struct BufferElement {
 		std::string name;
 		ShaderDataType type;
-		uint32_t size;
-		uint32_t offset;
+		uint32_t size; //in bytes
+		uint32_t offset; //in bytes
 		bool normalized = false;
 
 		BufferElement(ShaderDataType type, const std::string& name)
@@ -47,7 +47,7 @@ namespace Trengine {
 	class BufferLayout {
 	private:
 		std::vector<BufferElement> elements;
-		uint32_t stride = 0;
+		uint32_t stride = 0; //bytes from this vertex first byte to next vertex first byte
 	private:
 		void calculateOffsetAndStride() {
 			uint32_t offset = 0;

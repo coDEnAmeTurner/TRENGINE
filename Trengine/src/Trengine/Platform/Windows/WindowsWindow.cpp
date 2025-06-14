@@ -34,7 +34,7 @@ namespace Trengine {
 		data.width = props.width;
 		data.height = props.height;
 
-		TR_CORE_INFO("Creating window {0} ({1}, {2])", props.title, props.width, props.height);
+		TR_CORE_INFO("Creating window {0} ({1}, {2}])", props.title, props.width, props.height);
 
 		if (!glfwInitialized) {
 			int success = glfwInit();
@@ -46,12 +46,12 @@ namespace Trengine {
 		window = glfwCreateWindow((int)props.width, (int)props.height, data.title.c_str(), nullptr, NULL);
 
 		context = new OpenGLContext(window);
-
 		context->init();
 		
 		glfwSetWindowUserPointer(window, &data);
 		setVSync(true);
 
+		//inherent callbakc setup for acquiring Windows Events into the architecture
 		glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);

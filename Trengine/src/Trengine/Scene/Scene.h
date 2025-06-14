@@ -19,6 +19,10 @@ namespace Trengine {
 
 		void onViewportResize(uint32_t width, uint32_t height);
 
+		void DestroyEntity(Entity entity);
+
+		bool ValidateEntity(Entity entity);
+
 	private:
 		entt::registry registry;
 		uint32_t viewportWidth;

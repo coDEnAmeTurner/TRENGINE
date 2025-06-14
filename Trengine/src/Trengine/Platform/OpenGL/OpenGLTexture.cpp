@@ -63,7 +63,7 @@ namespace Trengine {
 		glDeleteTextures(1, &rendererID);
 	}
 
-	void OpenGLTexture2D::bind(uint32_t slot) const
+	void OpenGLTexture2D::bind(uint32_t slot ) const
 	{
 		glBindTextureUnit(slot, rendererID);
 	}

@@ -23,6 +23,7 @@
 
 #define BIT(x) (1 << x)
 
+//##type: the name of the attribute, not a simple left value
 #define EVENT_CLASS_TYPE(type) static EventType getStaticType() {return EventType::##type;}\
 								virtual EventType getEventType() const override { return getStaticType(); }\
 								virtual const char* getName() const override {return #type;}
@@ -41,4 +42,4 @@
 	#define TR_CORE_ASSERT(x, ...)
 #endif
 
-#define HZ_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+#define TR_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)

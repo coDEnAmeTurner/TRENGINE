@@ -11,6 +11,8 @@ namespace Trengine {
 	class TR_API ImGUILayer : public Layer {
 	private:
 		float time = 0.0f;
+
+		//layer is willing to block events
 		bool blockEvents = true;
 
 	public:

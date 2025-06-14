@@ -10,10 +10,10 @@ namespace Trengine {
 		std::string result;
 		std::ifstream in(filepath, std::ios::in | std::ios::binary);
 		if (in) {
-			in.seekg(0, std::ios::end);
-			result.resize(in.tellg());
-			in.seekg(0, std::ios::beg);
-			in.read(&result[0], result.size());
+			in.seekg(0, std::ios::end); //Go to file end
+			result.resize(in.tellg()); // Returns the current position (i.e., file size in bytes).
+			in.seekg(0, std::ios::beg);//Rewind to the beginning.
+			in.read(&result[0], result.size());//Read the result size of file data
 			in.close();
 
 		}

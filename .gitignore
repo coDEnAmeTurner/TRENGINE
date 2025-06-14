@@ -13,3 +13,10 @@ bin-int/
 *.vcxproj.filters
 *.vcxproj.filters.user
 *.vcxproj.user
+
+*.dll
+*.exp
+*.lib
+*.pdb
+
+x64/

@@ -15,6 +15,15 @@ namespace Trengine {
 		void bind() const;
 		void unBind() const;
 
+		virtual void setUniformFloat(const std::string& name, float values) = 0;
+		virtual void setUniformFloat2(const std::string& name, const glm::vec2& values) = 0;
+		virtual void setUniformInt(const std::string& name, int values) = 0;
+		virtual void setUniformFloat3(const std::string& name, const glm::vec3& values) = 0;
+		virtual void setUniformFloat4(const std::string& name, const glm::vec4& values) = 0;
+		virtual void setUniformMat4(const std::string& name, const glm::mat4& matrix) = 0;
+		virtual void setUniformMat3(const std::string& name, const glm::mat3& matrix) = 0;
+		virtual void setUniformIntArray(const std::string& name, int* values, uint32_t count) = 0;
+
 		std::string getName() const { return name; }
 		
 		static Shader* create(const std::string& filepath);

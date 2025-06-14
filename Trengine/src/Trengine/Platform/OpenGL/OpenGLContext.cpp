@@ -13,6 +13,7 @@ namespace Trengine {
 	void OpenGLContext::init()
 	{
 		glfwMakeContextCurrent(windowHandle);
+		//get opengl api easier to call
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		TR_CORE_ASSERT(status, "Failed to initialize Glad!");
 
@@ -25,7 +26,5 @@ namespace Trengine {
 		glfwSwapBuffers(windowHandle);
 
 	}
-
-
 
 }

@@ -7,6 +7,10 @@ namespace Trengine {
 	protected:
 		glm::mat4 projection;
 	public:
+		Camera() {
+
+		}
+
 		Camera(const glm::mat4& projection)
 			: projection(projection) {}
 
@@ -17,6 +21,8 @@ namespace Trengine {
 
 	class SceneCamera : public Camera {
 	public:
+		SceneCamera();
+
 		SceneCamera(const glm::mat4& proj);
 
 		virtual ~SceneCamera() = default;

@@ -11,7 +11,8 @@ namespace Trengine {
 	{
 		glCreateBuffers(1, &rendererID);
 		glBindBuffer(GL_ARRAY_BUFFER, rendererID);
-		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+		//glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_DYNAMIC_DRAW);
 	}
 
 	OpenGLVertexBuffer::~OpenGLVertexBuffer()
@@ -50,8 +51,10 @@ namespace Trengine {
 	OpenGLIndexBuffer::OpenGLIndexBuffer(unsigned int* indices, uint32_t count)
 	{
 		glCreateBuffers(1, &rendererID);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererID);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+		/*glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererID);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);*/
+		glBindBuffer(GL_ARRAY_BUFFER, rendererID);
+		glBufferData(GL_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
 		this->count = count;
 	}
 

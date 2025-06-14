@@ -34,7 +34,7 @@ project "Trengine"
     kind "StaticLib"
     language "C++"
     staticruntime "on"
-    cppdialect "C++17"
+    cppdialect "C++20"
 
     targetdir("bin/" .. outputdir .. "/%{prj.name}")
     objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -99,7 +99,7 @@ project "Trengine Editor"
     kind "ConsoleApp"
     language "C++"
     staticruntime "on"
-    cppdialect "C++17"
+    cppdialect "C++20"
 
     targetdir("bin/" .. outputdir .. "/%{prj.name}")
     objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -153,7 +153,7 @@ project "Sandbox"
     kind "ConsoleApp"
     language "C++"
     staticruntime "on"
-    cppdialect "C++17"
+    cppdialect "C++20"
 
     targetdir("bin/" .. outputdir .. "/%{prj.name}")
     objdir("bin-int/" .. outputdir .. "/%{prj.name}")

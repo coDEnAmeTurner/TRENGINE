@@ -7,6 +7,9 @@
 #include "Trengine/Renderer/RenderCommand.h"
 
 namespace Trengine {
+	//this must be object of Application
+	//Application::x is a method of Application
+	//std::placeholders::_1: callable object has 1 parameter, that is parameter of the wrapped method
 	#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
 	Application* Application::instance;
@@ -23,7 +26,7 @@ namespace Trengine {
 		if (e.GetWidth() == 0 || e.GetHeight() == 0) {
 			minimized = true;
 
-			return true;
+			return false;
 		}
 
 		minimized = false;
@@ -71,8 +74,10 @@ namespace Trengine {
 					layer->onUpdate(timeStep);
 			
 			imGuiLayer->begin();
+
 			for (Layer* layer : layerStack)
 				layer->onImGuiRender();
+
 			imGuiLayer->end();
 
 			window->onUpdate();

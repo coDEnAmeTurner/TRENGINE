@@ -1,4 +1,6 @@
 #pragma once
+//the value corresponds with window event key press from Windows
+
 #define TR_KEY_SPACE              32
 #define TR_KEY_APOSTROPHE         39  /* ' */
 #define TR_KEY_COMMA              44  /* , */

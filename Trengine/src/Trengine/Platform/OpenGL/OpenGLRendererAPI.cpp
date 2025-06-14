@@ -18,6 +18,13 @@ void Trengine::OpenGLRendererAPI::drawIndexed(const std::shared_ptr<VertexArray>
 	vertexArray->bind();
 	glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
 	//glBindTexture(GL_TEXTURE_2D, 0);
+
+	
+}
+void Trengine::OpenGLRendererAPI::drawIndexedSingle(const std::shared_ptr<VertexArray>& vertexArray, uint32_t indexCount)
+{
+	glDrawElements(GL_TRIANGLES, vertexArray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Trengine::OpenGLRendererAPI::init()

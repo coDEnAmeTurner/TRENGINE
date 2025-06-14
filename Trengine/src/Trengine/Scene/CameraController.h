@@ -28,26 +28,26 @@ namespace Trengine {
 		}
 	public:
 		void onUpdate(Timestep ts) {
-			auto& transform = getComponent<TransformComponent>().transform;
+			auto& translation = getComponent<TransformComponent>().Translation;
 			float speed = 5.0f;
 
 			if (Input::isKeyPressed(TR_KEY_A))
-				transform[3][0] -= speed * ts;
+				translation.x -= speed * ts;
 
 			if (Input::isKeyPressed(TR_KEY_D))
-				transform[3][0] += speed * ts;
+				translation.x += speed * ts;
 
 			if (Input::isKeyPressed(TR_KEY_W))
-				transform[3][1] += speed * ts;
+				translation.y += speed * ts;
 
 			if (Input::isKeyPressed(TR_KEY_S))
-				transform[3][1] -= speed * ts;
+				translation.y -= speed * ts;
 		}
 
 		void onEvent(Event& e) {
 			EventDispatcher dispatcher(&e);
-			dispatcher.dispatch<MouseScrolledEvent>(HZ_BIND_EVENT_FN(CameraController::onMouseScrolled));
-			dispatcher.dispatch<WindowResizeEvent>(HZ_BIND_EVENT_FN(CameraController::onWindowResized));
+			dispatcher.dispatch<MouseScrolledEvent>(TR_BIND_EVENT_FN(CameraController::onMouseScrolled));
+			dispatcher.dispatch<WindowResizeEvent>(TR_BIND_EVENT_FN(CameraController::onWindowResized));
 		}
 
 

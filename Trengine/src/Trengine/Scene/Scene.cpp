@@ -14,6 +14,10 @@ namespace Trengine {
 	{
 	}
 
+	void Scene::DestroyEntity(Entity entity) {
+		registry.destroy(entity);
+	}
+
 	std::shared_ptr<Entity> Scene::createEntity(const std::string& name)
 	{
 		Entity* entity = new Entity(registry.create(), this);
@@ -44,29 +48,29 @@ namespace Trengine {
 		//camera and render
 		{
 			Camera* mainCamera = nullptr;
-			glm::mat4* cameraTransform = nullptr;
+			glm::mat4 cameraTransform;
 
-			auto& group = registry.view<TransformComponent, CameraComponent>();
+			auto group = registry.view<TransformComponent, CameraComponent>();
 			for (auto& entity : group) {
-				auto& [transform, camera] = group.get<TransformComponent, CameraComponent>(entity);
+				auto [transform, camera] = group.get<TransformComponent, CameraComponent>(entity);
 
 				if (camera.primary) {
 					mainCamera = &camera.camera;
-					cameraTransform = &transform.transform;
+					cameraTransform = transform.GetTransform();
 					break;
 				}
 			}
 
 			if (mainCamera)
 			{
-				Renderer2D::beginScene(*mainCamera, *cameraTransform);
+				Renderer2D::beginScene(*mainCamera, cameraTransform);
 
 				auto group = registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
 				for (auto entity : group)
 				{
-					auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+					auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 
-					Renderer2D::drawQuad(transform, sprite.color);
+					Renderer2D::drawQuad(transform.GetTransform(), sprite.color);
 				}
 
 			}
@@ -87,5 +91,10 @@ namespace Trengine {
 		}
 
 	}
+
+	bool Scene::ValidateEntity(Entity entity) {
+		return registry.valid(entity);
+	}
+
 
 }

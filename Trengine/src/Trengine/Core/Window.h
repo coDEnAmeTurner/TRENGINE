@@ -31,7 +31,7 @@ namespace Trengine {
 
 		static Window* create(const WindowProps& props = WindowProps());
 		static void glfwErrorCallback(int error, const char* description) {
-			TR_CORE_ERROR("GLFW Error ({0}): {1)", error, description);
+			TR_CORE_ERROR("GLFW Error ({0}): {1})", error, description);
 		}
 	};
 

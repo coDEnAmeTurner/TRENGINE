@@ -77,7 +77,7 @@ public:
 			cameraController.onUpdate(timeStep);
 		}
 
-		Trengine::Renderer2D::beginScene((Trengine::OrthographicCamera&)cameraController.getCamera());
+		//Trengine::Renderer2D::beginScene((Trengine::OrthographicCamera&)cameraController.getCamera());
 
 		for (uint32_t y = 0; y < mapHeight; y++) {
 			for (uint32_t x = 0; x < mapWidth; x++) {
@@ -90,7 +90,7 @@ public:
 				else
 					texture = chairTexture;
 
-				Trengine::Renderer2D::drawQuadSubTexture({ x - mapWidth / 2.0f, mapHeight - y - mapHeight / 2.0f, 0.5f }, { 1, 1 }, 0, texture);
+				//Trengine::Renderer2D::drawQuadSubTexture({ x - mapWidth / 2.0f, mapHeight - y - mapHeight / 2.0f, 0.5f }, { 1, 1 }, 0, texture);
 			}
 		}
 
@@ -198,14 +198,10 @@ class Sandbox : public Trengine::Application {
 public:
 	Sandbox() {
 		layerStack.PushLayer(new SandBox2D());
-
-		
 	}
 
 	~Sandbox() {
 	}
-
-
 };
 
 //the client defines CreateApplication

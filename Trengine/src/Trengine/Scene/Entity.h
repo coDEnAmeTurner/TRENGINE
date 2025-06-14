@@ -44,7 +44,7 @@ namespace Trengine {
 		}
 
 		template<typename T>
-		T& removeComponent() {
+		size_t removeComponent() {
 			TR_CORE_ASSERT(hasComponent<T>(), "Doesn't have this component!");
 
 			return scene->reg().remove<T>(entityHandle);
@@ -61,6 +61,8 @@ namespace Trengine {
 		{
 			return !(*this == other);
 		}
+
+		operator entt::entity() const { return entityHandle; }
 
 		entt::entity getEntityHandle() { return entityHandle; }
 	};

@@ -8,6 +8,7 @@ namespace Trengine {
 
 	LayerStack::~LayerStack() {
 		for (Layer* l : layers) {
+			l->onDetach();
 			delete l;
 		}
 	}
