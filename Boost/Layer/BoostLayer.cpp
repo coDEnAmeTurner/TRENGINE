@@ -28,7 +28,7 @@ void BoostLayer::onUpdate(Timestep ts)
 {
 	time += ts;
 	if ((int)(time * 10.0f) % 8 > 4)
-		m_Blink = !m_Blink;
+		blink = !blink;
 
 	if (level.isGameOver())
 		state = GameState::GameOver;
@@ -49,9 +49,9 @@ void BoostLayer::onUpdate(Timestep ts)
 	RenderCommand::setClearColor({ 0.0f, 0.0f, 0.0f, 1 });
 	RenderCommand::clear();
 
-	Renderer2D::beginScene(*camera, glm::mat4(1.0f));
+	Renderer2D::beginSceneSingle(*camera);
 	level.onRender();
-	Renderer2D::endScene();
+	Renderer2D::endSceneSingle();
 }
 
 void BoostLayer::onImGuiRender()
@@ -78,7 +78,7 @@ void BoostLayer::onImGuiRender()
 		auto height = Application::getInstance()->getWindow().getHeight();
 		pos.x += (unsigned int) width * 0.5f - 300.0f;
 		pos.y += 50.0f;
-		if (m_Blink)
+		if (blink)
 			ImGui::GetForegroundDrawList()->AddText(font, 120.0f, pos, 0xffffffff, "Click to Play!");
 		break;
 	}
@@ -89,7 +89,7 @@ void BoostLayer::onImGuiRender()
 		auto height = Application::getInstance()->getWindow().getHeight();
 		pos.x += width * 0.5f - 300.0f;
 		pos.y += 50.0f;
-		if (m_Blink)
+		if (blink)
 			ImGui::GetForegroundDrawList()->AddText(font, 120.0f, pos, 0xffffffff, "Click to Play!");
 
 		pos.x += 200.0f;
@@ -105,8 +105,8 @@ void BoostLayer::onImGuiRender()
 void BoostLayer::onEvent(Event& e)
 {
 	EventDispatcher dispatcher(&e);
-	dispatcher.dispatch<WindowResizeEvent>(HZ_BIND_EVENT_FN(BoostLayer::onWindowResize));
-	dispatcher.dispatch<MouseButtonPressedEvent>(HZ_BIND_EVENT_FN(BoostLayer::onMouseButtonPressed));
+	dispatcher.dispatch<WindowResizeEvent>(TR_BIND_EVENT_FN(BoostLayer::onWindowResize));
+	dispatcher.dispatch<MouseButtonPressedEvent>(TR_BIND_EVENT_FN(BoostLayer::onMouseButtonPressed));
 }
 
 bool BoostLayer::onMouseButtonPressed(MouseButtonPressedEvent& e)

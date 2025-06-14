@@ -4,7 +4,7 @@
 
 using namespace Trengine;
 
-static glm::vec4 HSVtoRGB(const glm::vec3& hsv) {
+static glm::vec4 hsvToRGB(const glm::vec3& hsv) {
 	int H = (int)(hsv.x * 360.0f);
 	double S = hsv.y;
 	double V = hsv.z;
@@ -48,7 +48,7 @@ static glm::vec4 HSVtoRGB(const glm::vec3& hsv) {
 	return { (Rs + m), (Gs + m), (Bs + m), 1.0f };
 }
 
-static bool PointInTri(const glm::vec2& p, glm::vec2& p0, const glm::vec2& p1, const glm::vec2& p2)
+static bool pointInTri(const glm::vec2& p, glm::vec2& p0, const glm::vec2& p1, const glm::vec2& p2)
 {
 	float s = p0.y * p2.x - p0.x * p2.y + (p2.y - p0.y) * p.x + (p0.x - p2.x) * p.y;
 	float t = p0.x * p1.y - p0.y * p1.x + (p0.y - p1.y) * p.x + (p1.x - p0.x) * p.y;
@@ -100,19 +100,19 @@ void Level::onRender()
 {
 	const auto& playerPos = player.getPosition();
 
-	glm::vec4 color = HSVtoRGB(pillarHSV);
+	glm::vec4 color = hsvToRGB(pillarHSV);
 
 	// Background
-	Renderer2D::drawQuad(glm::translate(glm::mat4(1) ,{ playerPos.x, 0.0f, -0.8f }) * glm::scale(glm::mat4(1),{ 50.0f, 50.0f, 1 }), { 0.3f, 0.3f, 0.3f, 1.0f });
+	Renderer2D::drawQuad({ playerPos.x, 0.0f, -0.8f }, { 50.0f, 50.0f }, { 0.3f, 0.3f, 0.3f, 1.0f });
 
 	// Floor and ceiling
-	Renderer2D::drawQuad(glm::translate(glm::mat4(1), { playerPos.x,  34.0f, 0 })* glm::scale(glm::mat4(1), { 50.0f, 50.0f,1 }), color);
-	Renderer2D::drawQuad(glm::translate(glm::mat4(1), {  playerPos.x, -34.0f,0 })* glm::scale(glm::mat4(1),{50.0f, 50.0f,1}), color);
+	Renderer2D::drawQuad({ playerPos.x,  34.0f }, { 50.0f, 50.0f }, color);
+	Renderer2D::drawQuad({ playerPos.x, -34.0f }, { 50.0f, 50.0f }, color);
 
 	for (auto& pillar : pillars)
 	{
-		Renderer2D::drawQuad(glm::translate(glm::mat4(1), pillar.TopPosition)*glm::rotate(glm::mat4(1), glm::radians(180.0f), {0,0,1}) * glm::scale(glm::mat4(1), {pillar.TopScale,1}), triangleTexture, color);
-		Renderer2D::drawQuad(glm::translate(glm::mat4(1), pillar.BottomPosition) * glm::scale(glm::mat4(1), { pillar.BottomScale,1 }), triangleTexture, color);
+		Renderer2D::drawQuad(pillar.TopPosition, pillar.TopScale, glm::radians(180.0f), triangleTexture, color);
+		Renderer2D::drawQuad(pillar.BottomPosition, pillar.BottomScale, 0.0f, triangleTexture, color);
 	}
 
 	player.onRender();
@@ -183,7 +183,7 @@ bool Level::collisionTest()
 
 		for (auto& vert : playerTransformedVerts)
 		{
-			if (PointInTri({ vert.x, vert.y }, tri[0], tri[1], tri[2]))
+			if (pointInTri({ vert.x, vert.y }, tri[0], tri[1], tri[2]))
 				return true;
 		}
 
@@ -197,7 +197,7 @@ bool Level::collisionTest()
 
 		for (auto& vert : playerTransformedVerts)
 		{
-			if (PointInTri({ vert.x, vert.y }, tri[0], tri[1], tri[2]))
+			if (pointInTri({ vert.x, vert.y }, tri[0], tri[1], tri[2]))
 				return true;
 		}
 

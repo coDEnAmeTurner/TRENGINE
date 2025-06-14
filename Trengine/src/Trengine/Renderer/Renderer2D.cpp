@@ -74,20 +74,44 @@ namespace Trengine {
 		
 	}
 
+	void Renderer2D::initSingle() {
+		dataSingle = new Renderer2DDataSingle();
+		dataSingle->quadVertexArray = std::shared_ptr<VertexArray>(VertexArray::Create());
+
+		float squareVertices[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
+		};
+
+		std::shared_ptr<VertexBuffer> squareVB = std::shared_ptr<VertexBuffer>(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		squareVB->setLayout({
+			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float2, "a_TexCoord" }
+			});
+		dataSingle->quadVertexArray->addVertexBuffer(squareVB);
+
+		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
+		std::shared_ptr<IndexBuffer> squareIB = std::shared_ptr<IndexBuffer>(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		dataSingle->quadVertexArray->addIndexBuffer(squareIB);
+
+		dataSingle->whiteTexture = Texture2D::create(1, 1);
+		uint32_t whiteTextureData = 0xffffffff;
+		dataSingle->whiteTexture->setData(&whiteTextureData, sizeof(uint32_t));
+
+		dataSingle->textureShader = std::shared_ptr<Shader>(Shader::create("assets/shaders/Texture.glsl"));
+		dataSingle->textureShader->bind();
+		dataSingle->textureShader->setUniformInt("u_Texture", 0);
+	}
+
+
 	void Renderer2D::shutDown() {
 		delete data;
 	}
 
-	void Renderer2D::beginScene(const OrthographicCamera& camera, const glm::mat4& transform)
-	{
-		glm::mat4 viewProjection = camera.getProjection() * glm::inverse(transform);
-
-		OpenGLShader* textureShaderRef = (OpenGLShader*)data->textureShader.get();
-		textureShaderRef->bind();
-		textureShaderRef->setUniformMat4("u_ViewProjection", viewProjection);
-
-		data->quadIndexCount = 0;
-		data->quadVertexBufferPtr = data->quadVertexBufferBase;
+	void Renderer2D::shutDownSingle() {
+		delete data;
 	}
 
 	void Renderer2D::beginScene(const Camera& camera, const glm::mat4& transform)
@@ -102,12 +126,22 @@ namespace Trengine {
 		data->quadVertexBufferPtr = data->quadVertexBufferBase;
 	}
 
+	void Renderer2D::beginSceneSingle(const OrthographicCamera& camera)
+	{
+		data->textureShader->bind();
+		dataSingle->textureShader->setUniformMat4("u_ViewProjection", camera.getProjection());
+	}
+
 	void Renderer2D::endScene()
 	{
 		uint32_t dataSize = (uint8_t*)data->quadVertexBufferPtr - (uint8_t*)data->quadVertexBufferBase;
 		data->quadVertexBuffer->setData(data->quadVertexBufferBase, dataSize);
 
 		flush();
+	}
+
+	void Renderer2D::endSceneSingle() {
+
 	}
 
 
@@ -242,8 +276,71 @@ namespace Trengine {
 			data->textureSlots[i]->bind(i);
 		}
 
-		RenderCommand::DrawIndexed(data->quadVertexArray, data->quadIndexCount);
+		RenderCommand::drawIndexed(data->quadVertexArray, data->quadIndexCount);
 		stats.DrawCalls++;
+	}
+
+	void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
+	{
+		drawQuad({ position.x, position.y, 0.0f }, size, color);
+	}
+	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
+	{
+		dataSingle->textureShader->setUniformFloat4("u_Color", color);
+		dataSingle->whiteTexture->bind();
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		dataSingle->textureShader->setUniformMat4("u_Transform", transform);
+		dataSingle->quadVertexArray->bind();
+		RenderCommand::drawIndexed(dataSingle->quadVertexArray);
+	}
+	void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr<Texture2D>& texture)
+	{
+		drawQuad({ position.x, position.y, 0.0f }, size, texture);
+	}
+	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<Texture2D>& texture)
+	{
+		dataSingle->textureShader->setUniformFloat4("u_Color", glm::vec4(1.0f));
+		texture->bind();
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		dataSingle->textureShader->setUniformMat4("u_Transform", transform);
+
+		dataSingle->quadVertexArray->bind();
+		RenderCommand::drawIndexed(dataSingle->quadVertexArray);
+	}
+	void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
+	{
+		drawQuad({ position.x, position.y, 0.0f }, size, rotation, color);
+	}
+	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color)
+	{
+		dataSingle->textureShader->setUniformFloat4("u_Color", color);
+		dataSingle->whiteTexture->bind();
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		dataSingle->textureShader->setUniformMat4("u_Transform", transform);
+		dataSingle->quadVertexArray->bind();
+		RenderCommand::drawIndexed(dataSingle->quadVertexArray);
+	}
+	void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const std::shared_ptr<Texture2D>& texture, const glm::vec4& color)
+	{
+		drawQuad({ position.x, position.y, 0.0f }, size, rotation, texture, color);
+	}
+	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const std::shared_ptr<Texture2D>& texture, const glm::vec4& color)
+	{
+		dataSingle->textureShader->setUniformFloat4("u_Color", color);
+		texture->bind();
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		dataSingle->textureShader->setUniformMat4("u_Transform", transform);
+
+		dataSingle->quadVertexArray->bind();
+		RenderCommand::drawIndexed(dataSingle->quadVertexArray);
 	}
 
 }

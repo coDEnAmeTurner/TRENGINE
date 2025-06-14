@@ -21,7 +21,7 @@ namespace Trengine {
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->setUniformMat4("u_Transform", transform);
 
 		vertexArray->bind();
-		RenderCommand::DrawIndexed(vertexArray);
+		RenderCommand::drawIndexed(vertexArray);
 	}
 
 	void Renderer::init()

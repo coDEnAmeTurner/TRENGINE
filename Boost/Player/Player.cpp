@@ -10,20 +10,20 @@ using namespace Trengine;
 Player::Player()
 {
 	// Smoke
-	smokeParticle.Position = { 0.0f, 0.0f };
-	smokeParticle.Velocity = { -2.0f, 0.0f }, smokeParticle.VelocityVariation = { 4.0f, 2.0f };
-	smokeParticle.SizeBegin = 0.35f, smokeParticle.SizeEnd = 0.0f, smokeParticle.SizeVariation = 0.15f;
-	smokeParticle.ColorBegin = { 0.8f, 0.8f, 0.8f, 1.0f };
-	smokeParticle.ColorEnd = { 0.6f, 0.6f, 0.6f, 1.0f };
-	smokeParticle.LifeTime = 4.0f;
+	smokeParticle.position = { 0.0f, 0.0f };
+	smokeParticle.velocity = { -2.0f, 0.0f }, smokeParticle.velocityVariation = { 4.0f, 2.0f };
+	smokeParticle.sizeBegin = 0.35f, smokeParticle.sizeEnd = 0.0f, smokeParticle.sizeVariation = 0.15f;
+	smokeParticle.colorBegin = { 0.8f, 0.8f, 0.8f, 1.0f };
+	smokeParticle.colorEnd = { 0.6f, 0.6f, 0.6f, 1.0f };
+	smokeParticle.lifeTime = 4.0f;
 
 	// Flames
-	engineParticle.Position = { 0.0f, 0.0f };
-	engineParticle.Velocity = { -2.0f, 0.0f }, engineParticle.VelocityVariation = { 3.0f, 1.0f };
-	engineParticle.SizeBegin = 0.5f, engineParticle.SizeEnd = 0.0f, engineParticle.SizeVariation = 0.3f;
-	engineParticle.ColorBegin = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f };
-	engineParticle.ColorEnd = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f , 1.0f };
-	engineParticle.LifeTime = 1.0f;
+	engineParticle.position = { 0.0f, 0.0f };
+	engineParticle.velocity = { -2.0f, 0.0f }, engineParticle.velocityVariation = { 3.0f, 1.0f };
+	engineParticle.sizeBegin = 0.5f, engineParticle.sizeEnd = 0.0f, engineParticle.sizeVariation = 0.3f;
+	engineParticle.colorBegin = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f };
+	engineParticle.colorEnd = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f , 1.0f };
+	engineParticle.lifeTime = 1.0f;
 }
 
 void Player::loadAssets()
@@ -45,8 +45,8 @@ void Player::onUpdate(Timestep ts)
 		glm::vec2 emissionPoint = { 0.0f, -0.6f };
 		float rotation = glm::radians(getRotation());
 		glm::vec4 rotated = glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f }) * glm::vec4(emissionPoint, 0.0f, 1.0f);
-		engineParticle.Position = position + glm::vec2{ rotated.x, rotated.y };
-		engineParticle.Velocity.y = -velocity.y * 0.2f - 0.2f;
+		engineParticle.position = position + glm::vec2{ rotated.x, rotated.y };
+		engineParticle.velocity.y = -velocity.y * 0.2f - 0.2f;
 		particleSystem.emit(engineParticle);
 	}
 	else
@@ -60,7 +60,7 @@ void Player::onUpdate(Timestep ts)
 	// Particles
 	if (time > smokeNextEmitTime)
 	{
-		smokeParticle.Position = position;
+		smokeParticle.position = position;
 		particleSystem.emit(smokeParticle);
 		smokeNextEmitTime += smokeEmitInterval;
 	}
@@ -71,7 +71,7 @@ void Player::onUpdate(Timestep ts)
 void Player::onRender()
 {
 	particleSystem.onRender();
-	Renderer2D::drawQuad(glm::translate(glm::mat4(1), { position.x, position.y, 0.5f })*glm::rotate(glm::mat4(1), glm::radians(getRotation()), {0,0,1}) * glm::scale(glm::mat4(1), {1.0f, 1.3f,1}), shipTexture);
+	Renderer2D::drawQuad({ position.x, position.y, 0.5f }, { 1.0f, 1.3f }, glm::radians(getRotation()), shipTexture);
 }
 
 void Player::onImGuiRender()

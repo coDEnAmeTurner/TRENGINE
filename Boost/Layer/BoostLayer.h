@@ -21,7 +21,7 @@ namespace Trengine {
 		Level level;
 		ImFont* font;
 		float time = 0.0f;
-		bool m_Blink = false;
+		bool blink = false;
 
 		enum class GameState
 		{

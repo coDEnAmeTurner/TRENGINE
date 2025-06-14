@@ -46,8 +46,8 @@ namespace Trengine {
 
 		void onEvent(Event& e) {
 			EventDispatcher dispatcher(&e);
-			dispatcher.dispatch<MouseScrolledEvent>(HZ_BIND_EVENT_FN(CameraController::onMouseScrolled));
-			dispatcher.dispatch<WindowResizeEvent>(HZ_BIND_EVENT_FN(CameraController::onWindowResized));
+			dispatcher.dispatch<MouseScrolledEvent>(TR_BIND_EVENT_FN(CameraController::onMouseScrolled));
+			dispatcher.dispatch<WindowResizeEvent>(TR_BIND_EVENT_FN(CameraController::onWindowResized));
 		}
 
 

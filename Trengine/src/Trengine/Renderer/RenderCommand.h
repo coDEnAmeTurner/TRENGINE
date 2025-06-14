@@ -8,7 +8,7 @@ namespace Trengine {
 	private:
 		static RendererAPI* rendererAPI;
 	public:
-		static void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t count = 0)
+		static void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t count = 0)
 		{
 			rendererAPI->drawIndexed(vertexArray, count);
 		}

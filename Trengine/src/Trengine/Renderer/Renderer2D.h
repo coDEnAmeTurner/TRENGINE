@@ -47,24 +47,43 @@ namespace Trengine {
 			uint32_t textureSlotIndex = 1;
 		};
 
+		struct Renderer2DDataSingle {
+			std::shared_ptr <VertexArray> quadVertexArray;
+			std::shared_ptr<Shader> textureShader;
+			std::shared_ptr<Texture2D> whiteTexture;
+		};
+
 		static Statistics stats;
 
 		static Renderer2DData* data;
+
+		static Renderer2DDataSingle* dataSingle;
 
 	public: 
 		static void resetStats();
 		static Statistics getStats();
 
 		static void init();
+		static void initSingle();
 		static void shutDown();
+		static void shutDownSingle();
 
-		static void beginScene(const OrthographicCamera& camera, const glm::mat4& transform);
 		static void beginScene(const Camera& camera, const glm::mat4& transform);
+		static void beginSceneSingle(const OrthographicCamera& camera);
 		static void endScene();
+		static void endSceneSingle();
 
 		static void drawQuad(const glm::mat4& transform, const glm::vec4& color);
 		static void drawQuad(const glm::mat4& transform, const std::shared_ptr<Texture2D>& texture, const glm::vec4& color = { 1, 1, 1, 1 });
 		static void drawQuadSubTexture(const glm::mat4& transform, const std::shared_ptr<SubTexture2D>& subTexture, const glm::vec4& color = { 1, 1, 1, 1 });
+		static void drawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
+		static void drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
+		static void drawQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color);
+		static void drawQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color);
+		static void drawQuad(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr <Texture2D>& texture);
+		static void drawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<Texture2D>& texture);
+		static void drawQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const std::shared_ptr<Texture2D>& texture, const glm::vec4& color = { 1.0f, 1.0f, 1.0f, 1.0f });
+		static void drawQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const std::shared_ptr<Texture2D>& texture, const glm::vec4& color = { 1.0f, 1.0f, 1.0f, 1.0f });
 
 		static const Renderer2DData* getData() { return data; }
 		static void setData(const std::shared_ptr<VertexArray>& quadVertexArray) {
@@ -84,6 +103,7 @@ namespace Trengine {
 	};
 
 	inline Renderer2D::Renderer2DData* Renderer2D::data = nullptr;
+	inline Renderer2D::Renderer2DDataSingle* Renderer2D::dataSingle = nullptr;
 
 	inline Renderer2D::Statistics Renderer2D::stats;
 }

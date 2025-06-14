@@ -176,9 +176,9 @@ void Trengine::SceneHierachyPanel::drawComponents(Entity& entity)
 		{
 			auto& tc = entity.getComponent<TransformComponent>();
 			DrawVec3Control("Translation", tc.Translation);
-			glm::vec3 rotation = glm::degrees(tc.Rotation);
+			glm::vec3 rotation = glm::degrees(tc.rotation);
 			DrawVec3Control("Rotation", rotation);
-			tc.Rotation = glm::radians(rotation);
+			tc.rotation = glm::radians(rotation);
 			DrawVec3Control("Scale", tc.Scale, 1);
 
 			ImGui::TreePop();
